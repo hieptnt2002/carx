@@ -309,7 +309,7 @@ class CarReponsitoryImpl implements CarReponsitory {
   Future<List<Car>> fetchCarsByDistributor(int id) async {
     try {
       final reponse = await _dio.post(
-        FETCH_TOP_CAR,
+        FETCH_CARS_BY_DISTRIBUTOR,
         data: FormData.fromMap(
           {'id': id},
         ),

@@ -21,7 +21,7 @@ import 'package:carx/view/login/login_view.dart';
 import 'package:carx/view/login/register_view.dart';
 
 import 'package:carx/view/main_view.dart';
-import 'package:path/path.dart';
+
 
 
 
