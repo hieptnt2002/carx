@@ -7,6 +7,8 @@ class FetchCarDetailEvent extends CarDetailEvent {
   FetchCarDetailEvent({required this.carId});
 }
 
+class FetchRecentlyCarsEvent extends CarDetailEvent {}
+
 class CheckCarFavoriteEvent extends CarDetailEvent {
   final int carId;
   CheckCarFavoriteEvent(this.carId);

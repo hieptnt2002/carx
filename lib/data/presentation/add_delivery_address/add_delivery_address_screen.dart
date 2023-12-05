@@ -42,7 +42,7 @@ class _AddDeliveryAddressScreenState extends State<AddDeliveryAddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New Address'),
+        title: const Text('Thêm Địa Chỉ Mới'),
       ),
       body: WillPopScope(
         onWillPop: () async {
@@ -59,7 +59,7 @@ class _AddDeliveryAddressScreenState extends State<AddDeliveryAddressScreen> {
               } else if (state.status == DeliveryAddressHandlerStatus.success) {
                 Loading().hide();
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Successfully'),
+                  content: Text('Đã thêm'),
                   backgroundColor: AppColors.colorSuccess,
                 ));
                 Navigator.pop(context, true);
@@ -78,7 +78,7 @@ class _AddDeliveryAddressScreenState extends State<AddDeliveryAddressScreen> {
                     const Padding(
                       padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
                       child: Text(
-                        'Contact',
+                        'Liên hệ',
                         style: AppText.bodyGrey,
                       ),
                     ),
@@ -92,7 +92,7 @@ class _AddDeliveryAddressScreenState extends State<AddDeliveryAddressScreen> {
                         focusNode: _nameFocusNode,
                         cursorColor: AppColors.primary,
                         decoration: const InputDecoration(
-                          hintText: 'Enter full name',
+                          hintText: 'Nhập tên người nhận',
                           border: InputBorder.none,
                         ),
                         style: const TextStyle(color: AppColors.primary),
@@ -115,7 +115,7 @@ class _AddDeliveryAddressScreenState extends State<AddDeliveryAddressScreen> {
                         cursorColor: AppColors.primary,
                         keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
-                          hintText: 'Enter phone number',
+                          hintText: 'Nhập số điện thoại',
                           border: InputBorder.none,
                         ),
                         style: const TextStyle(color: AppColors.primary),
@@ -129,7 +129,7 @@ class _AddDeliveryAddressScreenState extends State<AddDeliveryAddressScreen> {
                     const Padding(
                       padding: EdgeInsets.fromLTRB(12, 24, 12, 12),
                       child: Text(
-                        'Address',
+                        'Địa chỉ nhận',
                         style: AppText.bodyGrey,
                       ),
                     ),
@@ -143,7 +143,7 @@ class _AddDeliveryAddressScreenState extends State<AddDeliveryAddressScreen> {
                         focusNode: _addressFocusNode,
                         cursorColor: AppColors.primary,
                         decoration: const InputDecoration(
-                          hintText: 'Enter address',
+                          hintText: 'Nhập địa chỉ giao(nhận)',
                           border: InputBorder.none,
                         ),
                         style: const TextStyle(color: AppColors.primary),
@@ -166,7 +166,7 @@ class _AddDeliveryAddressScreenState extends State<AddDeliveryAddressScreen> {
                         children: [
                           const Expanded(
                             child: Text(
-                              'Type of address',
+                              'Loại địa chỉ',
                               style: AppText.bodyFontColor,
                             ),
                           ),
@@ -245,7 +245,7 @@ class _AddDeliveryAddressScreenState extends State<AddDeliveryAddressScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            'Set as default address',
+                            'Đặt địa chỉ mặc định',
                             style: AppText.bodyFontColor,
                           ),
                           Switch(
@@ -280,7 +280,7 @@ class _AddDeliveryAddressScreenState extends State<AddDeliveryAddressScreen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 16, 0, 16)),
                             child: const Text(
-                              'Add Address',
+                              'Thêm Địa Chỉ',
                               style: TextStyle(
                                   fontSize: 16,
                                   color: AppColors.secondary,

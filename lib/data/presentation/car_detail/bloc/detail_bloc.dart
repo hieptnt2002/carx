@@ -1,3 +1,4 @@
+import 'package:carx/data/model/car.dart';
 import 'package:carx/data/model/car_detail.dart';
 import 'package:carx/data/model/car_review.dart';
 
@@ -7,6 +8,7 @@ import 'package:carx/data/presentation/car_detail/bloc/detail_state.dart';
 import 'package:carx/data/reponsitories/car/car_reponsitory.dart';
 import 'package:carx/data/local/favorite_car_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CarDetailBloc extends Bloc<CarDetailEvent, CarDetailState> {
   CarDetailBloc(
@@ -34,6 +36,21 @@ class CarDetailBloc extends Bloc<CarDetailEvent, CarDetailState> {
         } catch (e) {
           emit(state.copyWith(detailStatus: CarDetailStatus.failure));
         }
+      },
+    );
+    on<FetchRecentlyCarsEvent>(
+      (event, emit) async {
+        final cars = await carRepository.fetchCars();
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        final prefCarsId = prefs.getStringList('RE_CAR') ?? [];
+
+        List<Car> recentlyCars = [];
+        for (final car in cars) {
+          if (prefCarsId.contains(car.id.toString())) {
+            recentlyCars.add(car);
+          }
+        }
+        emit(state.copyWith(recentlyCars: recentlyCars));
       },
     );
     on<CheckCarFavoriteEvent>(

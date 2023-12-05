@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carx/utilities/app_text.dart';
 
@@ -9,6 +11,7 @@ import 'package:carx/service/auth/firebase_auth_provider.dart';
 import 'package:carx/utilities/app_colors.dart';
 
 import 'package:carx/utilities/app_routes.dart';
+import 'package:carx/data/presentation/dashboard_distributor/distributor_dashboard_view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +50,7 @@ class _PersonalViewState extends State<PersonalView> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Profile',
+            'Cá nhân',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           actions: [
@@ -56,11 +59,11 @@ class _PersonalViewState extends State<PersonalView> {
                 return [
                   const PopupMenuItem(
                     value: 0,
-                    child: Text('Edit Profile'),
+                    child: Text('Chỉnh sửa hồ sơ'),
                   ),
                   const PopupMenuItem(
                     value: 1,
-                    child: Text('Log out'),
+                    child: Text('Đăng xuất'),
                   ),
                 ];
               },
@@ -190,8 +193,7 @@ class _PersonalViewState extends State<PersonalView> {
                       style: AppText.title1.copyWith(color: AppColors.primary),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 32),
                   ListView.builder(
                     itemCount: items.length,
                     shrinkWrap: true,
@@ -201,9 +203,7 @@ class _PersonalViewState extends State<PersonalView> {
                       return Container(
                         margin:
                             const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 8),
-                        child: InkWell(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
+                        child: GestureDetector(
                           onTap: () async {
                             final isChange = await Navigator.of(context)
                                 .pushNamed(item.route);
@@ -241,6 +241,45 @@ class _PersonalViewState extends State<PersonalView> {
                       );
                     },
                   ),
+                  BlocBuilder<PersonalBloc, PersonalState>(
+                    bloc: _personalBloc,
+                    builder: (context, state) {
+                      if (state.fetchUserStatus == FetchUserStatus.success &&
+                          state.distributor != null) {
+                        return GestureDetector(
+                          onTap: () {
+                           Navigator.pushNamed(context, Routes.routeManageDistributor,arguments: state.distributor);
+                          },
+                          child: Container(
+                              padding: const EdgeInsets.all(6),
+                              margin: const EdgeInsetsDirectional.fromSTEB(
+                                  8, 0, 8, 0),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(12)),
+                                border: Border.all(
+                                    width: 1, color: AppColors.lightGray),
+                              ),
+                              child: ListTile(
+                                leading: CircleAvatar(
+                                  backgroundColor: AppColors.lightGray,
+                                  child: SvgPicture.asset(
+                                    'assets/svg/person.svg',
+                                    color: AppColors.primary,
+                                    width: 24,
+                                  ),
+                                ),
+                                title: const Text('Chuyển sang Nhà phân phối'),
+                                subtitle: const Text(
+                                    'Phần này dành cho Nhà phân phối'),
+                                trailing: const Icon(
+                                    Icons.keyboard_arrow_right_rounded),
+                              )),
+                        );
+                      }
+                      return Container();
+                    },
+                  ),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.symmetric(
@@ -257,7 +296,7 @@ class _PersonalViewState extends State<PersonalView> {
                       icon:
                           SvgPicture.asset('assets/svg/logout.svg', width: 24),
                       label: const Text(
-                        'Logout',
+                        'Đăng xuất',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -286,38 +325,38 @@ class _PersonalViewState extends State<PersonalView> {
 final items = [
   SettingItem(
     icon: 'assets/svg/person.svg',
-    title: 'Edit Profile',
-    subtitle: 'View edit profile user',
+    title: 'Chỉnh sửa thông tin',
+    subtitle: 'Xem chỉnh sửa thông tin người dùng',
     route: Routes.routeEditProfile,
   ),
   SettingItem(
     icon: 'assets/svg/cube.svg',
-    title: 'Order',
-    subtitle: 'View all orders',
+    title: 'Đơn đặt xe',
+    subtitle: 'Xem tất cả đơn đặt xe',
     route: Routes.routeAllOrder,
   ),
   SettingItem(
     icon: 'assets/svg/truck.svg',
-    title: 'Address',
-    subtitle: 'View and manage your address',
+    title: 'Địa chỉ',
+    subtitle: 'Quản lý địa chỉ của bạn',
     route: Routes.routeDeliveryAddresses,
   ),
   SettingItem(
     icon: 'assets/svg/bell.svg',
-    title: 'Notification',
-    subtitle: 'View edit profile user',
+    title: 'Thông báo',
+    subtitle: 'Quản lý thông báo',
     route: Routes.routeDeliveryAddresses,
   ),
   SettingItem(
     icon: 'assets/svg/payment.svg',
-    title: 'Payment',
-    subtitle: 'View and manage your payments',
+    title: 'Thanh toán',
+    subtitle: 'Xem và quản lý thanh toán của bạn',
     route: Routes.routeAllOrder,
   ),
   SettingItem(
     icon: 'assets/svg/help.svg',
-    title: 'Support',
-    subtitle: 'View for support',
+    title: 'Hỗ trợ',
+    subtitle: 'Xem để được hỗ trợ',
     route: Routes.routeAllOrder,
   ),
 ];

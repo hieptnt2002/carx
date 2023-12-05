@@ -1,7 +1,8 @@
-import 'package:carx/components/shimmer_load_car.dart';
+import 'package:carx/components/shimmer_car.dart';
 import 'package:carx/data/presentation/search/ui/search_result_empty.dart';
 import 'package:carx/data/reponsitories/car/car_reponsitory_impl.dart';
 import 'package:carx/utilities/app_colors.dart';
+import 'package:carx/utilities/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carx/components/item_car.dart';
@@ -42,7 +43,7 @@ class _SearchViewState extends State<SearchView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search For Cars'),
+        title: const Text('Tìm Kiếm Xe'),
       ),
       body: SingleChildScrollView(
         child: BlocProvider(
@@ -61,13 +62,13 @@ class _SearchViewState extends State<SearchView> {
                         shrinkWrap: true,
                         itemCount: 8,
                         itemBuilder: (context, index) {
-                          return const ShimmerLoadCar();
+                          return shimmerCar();
                         },
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
-                          mainAxisExtent: 280,
-                          mainAxisSpacing: 16.0,
-                          crossAxisSpacing: 16.0,
+                          mainAxisExtent: 260,
+                          mainAxisSpacing: 4.0,
+                          crossAxisSpacing: 4.0,
                           childAspectRatio: 1.0,
                           maxCrossAxisExtent: 300,
                         ),
@@ -86,13 +87,13 @@ class _SearchViewState extends State<SearchView> {
                           const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                       child: TypeAheadField(
                         textFieldConfiguration: TextFieldConfiguration(
-                          autofocus: true,
+                            autofocus: true,
                             controller: _searchTextController,
                             decoration: InputDecoration(
                               focusedBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(
                                       color: AppColors.primary, width: 1)),
-                              hintText: 'Search....',
+                              hintText: 'Tìm kiếm....',
                               prefixIcon: const Icon(
                                 Icons.search,
                                 color: AppColors.primary,
@@ -124,11 +125,12 @@ class _SearchViewState extends State<SearchView> {
                         },
                         noItemsFoundBuilder: (context) {
                           return const ListTile(
-                            title: Text('No suggestions found.'),
+                            title: Text('Không tìm thấy kết quả nào!'),
                           );
                         },
                         onSuggestionSelected: (suggestion) {
-                          _searchTextController = TextEditingController(text: suggestion);
+                          _searchTextController =
+                              TextEditingController(text: suggestion);
                           bloc.add(SearchCarsEvent(suggestion));
                         },
                       ),
@@ -146,35 +148,32 @@ class _SearchViewState extends State<SearchView> {
                             Expanded(
                               child: RichText(
                                 text: TextSpan(
-                                  text: 'Result for',
+                                  text: 'Kết quả cho',
                                   children: [
                                     const TextSpan(text: ' " '),
                                     TextSpan(
-                                        text: _searchTextController.text,
-                                        style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.secondary)),
+                                      text: _searchTextController.text,
+                                      style: AppText.subtitle2,
+                                    ),
                                     const TextSpan(text: ' " '),
                                   ],
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.primary),
+                                 style: AppText.subtitle1,
                                 ),
                               ),
                             ),
                             RichText(
                               text: TextSpan(
                                 children: [
-                                  TextSpan(text: cars.length.toString()),
+                                  TextSpan(
+                                    text: cars.length.toString(),
+                                    style: AppText.subtitle2,
+                                  ),
                                   const TextSpan(text: ' '),
-                                  const TextSpan(text: 'found'),
+                                  const TextSpan(
+                                    text: 'tìm thấy',
+                                    style: AppText.bodyFontColor,
+                                  ),
                                 ],
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.secondary),
                               ),
                             ),
                           ],
@@ -189,7 +188,7 @@ class _SearchViewState extends State<SearchView> {
                         } else {
                           return Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                12, 12, 12, 0),
+                                4, 4, 4, 0),
                             child: GridView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
@@ -202,9 +201,9 @@ class _SearchViewState extends State<SearchView> {
                               },
                               gridDelegate:
                                   const SliverGridDelegateWithMaxCrossAxisExtent(
-                                mainAxisExtent: 280,
-                                mainAxisSpacing: 16.0,
-                                crossAxisSpacing: 16.0,
+                                mainAxisExtent: 260,
+                                mainAxisSpacing: 4.0,
+                                crossAxisSpacing: 4.0,
                                 childAspectRatio: 1.0,
                                 maxCrossAxisExtent: 300,
                               ),
@@ -216,10 +215,32 @@ class _SearchViewState extends State<SearchView> {
                     const SizedBox(height: 16),
                   ],
                 );
-              } else if (state.fetchCarsStatus == FetchCarsStatus.failure) {
-                return const Center(child: Text('Error fetch data'));
               }
-              return Container();
+              return Column(
+                children: [
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(12, 12, 12, 0),
+                    child: GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: 8,
+                      itemBuilder: (context, index) {
+                        return shimmerCar();
+                      },
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        mainAxisExtent: 260,
+                        mainAxisSpacing: 4.0,
+                        crossAxisSpacing: 4.0,
+                        childAspectRatio: 1.0,
+                        maxCrossAxisExtent: 300,
+                      ),
+                    ),
+                  ),
+                ],
+              );
             },
           ),
         ),

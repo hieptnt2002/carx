@@ -15,7 +15,7 @@ class OrderState extends Equatable {
   final int price;
   final bool isLoading;
   final Car? car;
-
+  final int quantity;
   final DeliveryAddress? deliveryAddress;
 
   final FetchDeliveryAddressStatus deliveryAddressStatus;
@@ -30,10 +30,11 @@ class OrderState extends Equatable {
     required this.isLoading,
     required this.car,
     required this.deliveryAddress,
+    required this.quantity,
     required this.deliveryAddressStatus,
   });
 
-  OrderState.initial()
+  const OrderState.initial()
       : delivery = 0,
         startTime = null,
         endTime = null,
@@ -43,6 +44,7 @@ class OrderState extends Equatable {
         isLoading = false,
         car = null,
         deliveryAddress = null,
+        quantity = 1,
         deliveryAddressStatus = FetchDeliveryAddressStatus.initial;
 
   OrderState copyWith({
@@ -56,6 +58,7 @@ class OrderState extends Equatable {
     bool? isLoading,
     Car? car,
     DeliveryAddress? deliveryAddress,
+    int? quantity,
     FetchDeliveryAddressStatus? deliveryAddressStatus,
   }) {
     return OrderState(
@@ -68,6 +71,7 @@ class OrderState extends Equatable {
       isLoading: isLoading ?? this.isLoading,
       car: car ?? this.car,
       deliveryAddress: deliveryAddress ?? this.deliveryAddress,
+      quantity: quantity ?? this.quantity,
       deliveryAddressStatus:
           deliveryAddressStatus ?? this.deliveryAddressStatus,
     );
@@ -84,6 +88,7 @@ class OrderState extends Equatable {
         isLoading,
         car,
         deliveryAddress,
+        quantity,
         deliveryAddressStatus,
       ];
 }

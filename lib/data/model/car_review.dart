@@ -6,7 +6,7 @@ class CarReview extends Equatable {
   String id;
   double rating;
   String comment;
-  String createdAs;
+  String createdAt;
   int like;
   int dislike;
   String userId;
@@ -15,7 +15,7 @@ class CarReview extends Equatable {
     required this.id,
     required this.rating,
     required this.comment,
-    required this.createdAs,
+    required this.createdAt,
     required this.like,
     required this.dislike,
     required this.userId,
@@ -26,7 +26,7 @@ class CarReview extends Equatable {
         id: json['id'],
         rating: double.parse(json['rating']),
         comment: json['comment'] ?? '',
-        createdAs: json['created_as'],
+        createdAt: json['created_at'],
         like: int.parse(json['like']),
         dislike: int.parse(json['dislike']),
         userId: json['user_id'],
@@ -35,5 +35,5 @@ class CarReview extends Equatable {
 
   @override
   List<Object?> get props =>
-      [id, rating, comment, createdAs, like, dislike, userId, userName];
+      [id, rating, comment, createdAt, like, dislike, userId, userName];
 }

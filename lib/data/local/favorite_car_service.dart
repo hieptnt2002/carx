@@ -66,7 +66,7 @@ class CarFavoriteService {
       where: 'car_id = ? AND user_id = ?',
       whereArgs: [carId, uId],
     );
-   
+
     if (result.isEmpty) {
       return false;
     } else {
@@ -128,7 +128,11 @@ class CarFavoriteService {
       name: car.name,
       image: car.image,
       price: car.price,
-      brand: car.brand,
+      brandName: car.brandName,
+      brandLogo: car.brandLogo,
+      quantity: car.quantity,
+      location: car.location ?? 'Not yet',
+      rating: car.rating ?? 0.0,
       userId: uId,
     );
     await db.insert(carFavoriteTable, carFavorite.toMap());
@@ -189,7 +193,11 @@ class CarFavorite {
   final String name;
   final String image;
   final int price;
-  final String brand;
+  final String brandName;
+  final String brandLogo;
+  final int quantity;
+  final String location;
+  final double rating;
   final String userId;
 
   const CarFavorite({
@@ -198,19 +206,26 @@ class CarFavorite {
     required this.name,
     required this.image,
     required this.price,
-    required this.brand,
+    required this.brandName,
+    required this.brandLogo,
+    required this.quantity,
+    required this.location,
+    required this.rating,
     required this.userId,
   });
 
   factory CarFavorite.fromRow(Map<String, dynamic> map) => CarFavorite(
-        id: map['id'],
-        carId: map['car_id'],
-        name: map['name'],
-        image: map['image'],
-        price: int.tryParse(map['price']) ?? 0,
-        brand: map['brand'],
-        userId: map['user_id'],
-      );
+      id: map['id'],
+      carId: map['car_id'],
+      name: map['name'],
+      image: map['image'],
+      price: int.tryParse(map['price']) ?? 0,
+      brandName: map['brand'],
+      brandLogo: map['brand_image'],
+      quantity: map['quantity'] ?? 0,
+      userId: map['user_id'],
+      location: map['location'],
+      rating: map['rating']);
 
   Map<String, dynamic> toMap() => {
         idColumn: id,
@@ -218,7 +233,11 @@ class CarFavorite {
         nameColumn: name,
         imageColumn: image,
         priceColumn: price,
-        brandColumn: brand,
+        brandColumn: brandName,
+        brandImageColumn: brandLogo,
+        quantityColumn: quantity,
+        locationColumn: location,
+        ratingColumn: rating,
         userIdColumn: userId,
       };
 }
@@ -231,6 +250,10 @@ const nameColumn = 'name';
 const imageColumn = 'image';
 const priceColumn = 'price';
 const brandColumn = 'brand';
+const brandImageColumn = 'brand_image';
+const quantityColumn = 'quantity';
+const locationColumn = 'location';
+const ratingColumn = 'rating';
 const userIdColumn = 'user_id';
 
 const createCarFavoriteTable = '''CREATE TABLE IF NOT EXISTS "car_favorite" (
@@ -240,6 +263,10 @@ const createCarFavoriteTable = '''CREATE TABLE IF NOT EXISTS "car_favorite" (
         "image"	TEXT,
         "price"	TEXT,
         "brand"	TEXT,
+        "brand_image" TEXT,
+        "quantity" INTEGER,
+        "location" TEXT,
+        "rating" DOUBLE,
         "user_id"	TEXT NOT NULL,
         PRIMARY KEY("id" AUTOINCREMENT)      
       );''';

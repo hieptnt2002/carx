@@ -43,7 +43,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     if (event.paymentMethod.isEmpty) {
       await Future.delayed(const Duration(seconds: 2));
       emit(state.copyWith(
-        errorText: 'Please select payment method',
+        errorText: 'Vui lòng chọn phương thức thanh toán!',
         status: PaymentStatus.failure,
       ));
     } else {

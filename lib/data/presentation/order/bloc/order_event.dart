@@ -45,3 +45,7 @@ class OrderButtonClicked extends OrderEvent {
 
   OrderButtonClicked(this.context);
 }
+
+class DecrementQuantityOrderEvent extends OrderEvent {}
+
+class IncrementQuantityOrderEvent extends OrderEvent {}

@@ -37,7 +37,7 @@ Widget selectAddressWidget(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Select Delivery Address',
+                        'Chọn Địa Chỉ Nhận Xe',
                         style: AppText.subtitle3.copyWith(
                           color: AppColors.primary,
                         ),
@@ -67,7 +67,7 @@ Widget selectAddressWidget(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Select Delivery Address',
+                         'Chọn Địa Chỉ Nhận Xe',
                         style: AppText.subtitle3.copyWith(
                           color: AppColors.primary,
                         ),
@@ -92,7 +92,7 @@ Widget selectAddressWidget(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'SAVE ADDRESS',
+                        'LƯU ĐỊA CHỈ',
                         style: AppText.bodyFontColor,
                       ),
                       TextButton.icon(
@@ -111,7 +111,7 @@ Widget selectAddressWidget(
                           color: AppColors.secondary,
                         ),
                         label: const Text(
-                          'Add New Address',
+                          'Thêm địa chỉ mới',
                           style: AppText.body1,
                         ),
                         style: TextButton.styleFrom(

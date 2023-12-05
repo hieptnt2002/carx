@@ -1,16 +1,9 @@
+import 'package:carx/utilities/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ShimmerCarItemBooking extends StatefulWidget {
-  const ShimmerCarItemBooking({super.key});
 
-  @override
-  State<ShimmerCarItemBooking> createState() => _ShimmerCarItemBookingState();
-}
-
-class _ShimmerCarItemBookingState extends State<ShimmerCarItemBooking> {
-  @override
-  Widget build(BuildContext context) {
+  Widget shimmerCarBooking() {
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
@@ -27,12 +20,12 @@ class _ShimmerCarItemBookingState extends State<ShimmerCarItemBooking> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Shimmer.fromColors(
-                baseColor: Colors.grey.withOpacity(0.5),
-                highlightColor: Colors.grey,
+                baseColor: AppColors.lightGray.withOpacity(0.5),
+                highlightColor: AppColors.lightGray,
                 child: Container(
                   width: 52.0,
                   height: 52.0,
-                  color: Colors.grey,
+                  color: AppColors.lightGray,
                 ),
               ),
               const SizedBox(width: 16),
@@ -85,12 +78,12 @@ class _ShimmerCarItemBookingState extends State<ShimmerCarItemBooking> {
 
   Widget load() {
     return Shimmer.fromColors(
-      baseColor: Colors.grey.withOpacity(0.5),
-      highlightColor: Colors.grey,
+      baseColor: AppColors.lightGray.withOpacity(0.5),
+      highlightColor: AppColors.lightGray,
       child: Container(
         height: 20,
-        color: Colors.grey,
+        color: AppColors.lightGray,
       ),
     );
   }
-}
+

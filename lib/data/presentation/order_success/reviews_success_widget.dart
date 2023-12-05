@@ -35,7 +35,7 @@ class ReviewSuccessWidget extends StatelessWidget {
            Padding(
             padding:const EdgeInsets.only(top: 12),
             child: Text(
-              'Your order has been placed',
+              'Đơn hàng của bạn đã được đặt!',
               textAlign: TextAlign.center,
               style: AppText.subtitle3.copyWith(color: AppColors.white),
             ),

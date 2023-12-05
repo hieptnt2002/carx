@@ -13,7 +13,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 Future<bool> ratingVoteDialog(
     BuildContext context, Car car, String codeOrder) async {
   CarReviewBloc carReviewBloc = CarReviewBloc(CarReponsitoryImpl.response());
-  FocusNode _textFocusNode = FocusNode();
+  final FocusNode textFocusNode = FocusNode();
   return showDialog(
     context: context,
     builder: (context) {
@@ -35,7 +35,7 @@ Future<bool> ratingVoteDialog(
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text(
-                      'Cannot enter special characters!',
+                      'Không thể nhập ký tự đặc biệt!',
                       style: TextStyle(color: AppColors.white),
                     ),
                     backgroundColor: AppColors.fontColor,
@@ -68,7 +68,7 @@ Future<bool> ratingVoteDialog(
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  height: 545,
+                  height: 530,
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
@@ -83,15 +83,7 @@ Future<bool> ratingVoteDialog(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              'Rental Reviews',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.secondary,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
+                           
                             Text(
                               car.name,
                               maxLines: 2,
@@ -113,7 +105,7 @@ Future<bool> ratingVoteDialog(
                             ),
                             const SizedBox(height: 16),
                             const Text(
-                              'Your review is very important for us to improve and provide better services',
+                              'Đánh giá của bạn rất quan trọng để chúng tôi cải thiện và cung cấp dịch vụ tốt hơn',
                               textAlign: TextAlign.center,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
@@ -125,7 +117,7 @@ Future<bool> ratingVoteDialog(
                             ),
                             const SizedBox(height: 16),
                             const Text(
-                              'Star Reviews',
+                              'Gửi sao đánh giá',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 16,
@@ -153,7 +145,7 @@ Future<bool> ratingVoteDialog(
                             ),
                             const SizedBox(height: 16),
                             TextField(
-                              focusNode: _textFocusNode,
+                              focusNode: textFocusNode,
                               onChanged: (value) {
                                 carReviewBloc.add(CommentInputCarReviewEvent(
                                     value.toString()));
@@ -161,7 +153,7 @@ Future<bool> ratingVoteDialog(
                               autocorrect: false,
                               cursorColor: Colors.black,
                               decoration: const InputDecoration(
-                                hintText: 'Enter comment',
+                                hintText: 'Nội dung phản hồi ......',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(8),
@@ -188,7 +180,7 @@ Future<bool> ratingVoteDialog(
                               width: MediaQuery.of(context).size.width,
                               child: TextButton(
                                 onPressed: () {
-                                  _textFocusNode.unfocus();
+                                  textFocusNode.unfocus();
                                   carReviewBloc
                                       .add(SubmitCarReviewEvent(car.id));
                                 },
@@ -198,7 +190,7 @@ Future<bool> ratingVoteDialog(
                                       borderRadius: BorderRadius.circular(8.0)),
                                 ),
                                 child: const Text(
-                                  'Submit Review',
+                                  'Gửi đánh giá',
                                   style: TextStyle(
                                       color: AppColors.secondary,
                                       fontWeight: FontWeight.w500,

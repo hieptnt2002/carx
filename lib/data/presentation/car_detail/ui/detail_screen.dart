@@ -1,9 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api, unnecessary_string_interpolations
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carx/components/item_car.dart';
 import 'package:carx/components/rating_bar_widget.dart';
 import 'package:carx/components/reviews_car.dart';
-import 'package:carx/components/shimmer_load_brand.dart';
+import 'package:carx/components/shimmer_brand.dart';
+
 import 'package:carx/data/model/car.dart';
 import 'package:carx/data/model/car_detail.dart';
 import 'package:carx/data/model/car_review.dart';
@@ -19,6 +21,7 @@ import 'package:carx/utilities/app_colors.dart';
 
 import 'package:carx/utilities/app_routes.dart';
 import 'package:carx/utilities/app_text.dart';
+import 'package:carx/utilities/util.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +54,8 @@ class _CarDetailViewState extends State<CarDetailView> {
     car = ModalRoute.of(context)!.settings.arguments as Car;
     carDetailBloc
       ..add(FetchCarDetailEvent(carId: car.id))
-      ..add(CheckCarFavoriteEvent(car.id));
+      ..add(CheckCarFavoriteEvent(car.id))
+      ..add(FetchRecentlyCarsEvent());
   }
 
   @override
@@ -102,12 +106,12 @@ class _CarDetailViewState extends State<CarDetailView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '\$${carDetail.pricePerDay}/day',
+                          '${formattedAmountCar(carDetail.pricePerDay.toInt())}/day',
                           style: AppText.title2,
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '14% off',
+                          '0% off',
                           style: AppText.title2
                               .copyWith(color: AppColors.colorSuccess),
                         ),
@@ -126,9 +130,9 @@ class _CarDetailViewState extends State<CarDetailView> {
                         side: const BorderSide(
                             width: 1, color: AppColors.lightGray),
                       ),
-                      child: const Text(
-                        'Book now',
-                        style: AppText.subtitle2,
+                      child:  Text(
+                        'Đặt ngay',
+                        style: AppText.subtitle2.copyWith(color: AppColors.white),
                       ),
                     ),
                   ],
@@ -141,6 +145,7 @@ class _CarDetailViewState extends State<CarDetailView> {
                   children: [
                     SingleChildScrollView(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Stack(
                             children: [
@@ -226,7 +231,7 @@ class _CarDetailViewState extends State<CarDetailView> {
                                       width: 70,
                                       child: CachedNetworkImage(
                                         placeholder: (context, url) =>
-                                            const ShimmerItemCategory(size: 30),
+                                            shimmerBrand(size: 30),
                                         imageUrl: carDetail.brandImage,
                                         height: 36,
                                         fit: BoxFit.contain,
@@ -259,7 +264,7 @@ class _CarDetailViewState extends State<CarDetailView> {
                                     ),
                                     const SizedBox(width: 12),
                                     Text(
-                                      '${carReviews.length} Rating | Preview',
+                                      '${carReviews.length} Đánh giá | Phản hồi',
                                       style: AppText.subtitle3.copyWith(
                                         color: AppColors.grey,
                                       ),
@@ -272,7 +277,7 @@ class _CarDetailViewState extends State<CarDetailView> {
                                   color: Color.fromARGB(255, 245, 244, 244),
                                 ),
                                 const Text(
-                                  'Specifications',
+                                  'Thông số kỹ thuật',
                                   style: AppText.title2,
                                 ),
                                 const SizedBox(height: 12),
@@ -286,14 +291,14 @@ class _CarDetailViewState extends State<CarDetailView> {
                                           child: boxSpecification(
                                               context,
                                               '${carDetail.seats}',
-                                              'Seats',
+                                              'Chỗ ngồi',
                                               ''),
                                         ),
                                         Expanded(
                                           child: boxSpecification(
                                               context,
                                               '${carDetail.engine}',
-                                              'Engine',
+                                              'Động cơ',
                                               ''),
                                         ),
                                       ],
@@ -307,14 +312,14 @@ class _CarDetailViewState extends State<CarDetailView> {
                                           child: boxSpecification(
                                               context,
                                               '${carDetail.topSpeed}',
-                                              'Top speed',
+                                              'Tốc độ tối đa',
                                               'km/h'),
                                         ),
                                         Expanded(
                                           child: boxSpecification(
                                               context,
                                               '${carDetail.horsePower}',
-                                              'Horse Power',
+                                              'Mã lực',
                                               'hp'),
                                         ),
                                       ],
@@ -323,7 +328,7 @@ class _CarDetailViewState extends State<CarDetailView> {
                                 ),
                                 const SizedBox(height: 24),
                                 const Text(
-                                  'Car Renter',
+                                  'Nhà phân phối',
                                   style: AppText.title2,
                                 ),
                                 const SizedBox(height: 12),
@@ -391,7 +396,7 @@ class _CarDetailViewState extends State<CarDetailView> {
                                   color: Color.fromARGB(255, 245, 244, 244),
                                 ),
                                 const Text(
-                                  'Desciption',
+                                  'Mô tả',
                                   style: AppText.title2,
                                 ),
                                 const SizedBox(height: 12),
@@ -455,7 +460,7 @@ class _CarDetailViewState extends State<CarDetailView> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'See All Details',
+                                        'Xem tất cả chi tiết',
                                         style: AppText.subtitle3,
                                       ),
                                       Icon(
@@ -471,7 +476,7 @@ class _CarDetailViewState extends State<CarDetailView> {
                                   color: Color.fromARGB(255, 245, 244, 244),
                                 ),
                                 const Text(
-                                  'Car Rental Reviews',
+                                  'Đánh Giá',
                                   style: AppText.title2,
                                 ),
                                 const SizedBox(height: 12),
@@ -488,7 +493,7 @@ class _CarDetailViewState extends State<CarDetailView> {
                                               .fromSTEB(0, 32, 0, 48),
                                           child: Center(
                                             child: Text(
-                                              'No reviews yet',
+                                              'Chưa có đánh giá nào!',
                                               style: AppText.title2.copyWith(
                                                   color: AppColors.grey),
                                             ),
@@ -554,7 +559,7 @@ class _CarDetailViewState extends State<CarDetailView> {
                                                                           0,
                                                                           0),
                                                               child: Text(
-                                                                'Car Rentail Reviews',
+                                                                'Đánh Giá',
                                                                 style: AppText
                                                                     .title2,
                                                               ),
@@ -613,7 +618,7 @@ class _CarDetailViewState extends State<CarDetailView> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    'See All Reviews',
+                                                    'Xem tất cả đánh giá',
                                                     style: AppText.subtitle3,
                                                   ),
                                                   Icon(
@@ -636,10 +641,50 @@ class _CarDetailViewState extends State<CarDetailView> {
                                     }
                                     return Container();
                                   },
-                                )
+                                ),
                               ],
                             ),
                           ),
+                          Container(
+                            color: Colors.white,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                  child: Text(
+                                    'Đã xem gần đây',
+                                    style: AppText.title1,
+                                  ),
+                                ),
+                                BlocBuilder<CarDetailBloc, CarDetailState>(
+                                    builder: (context, state) {
+                                  List<Car> cars = state.recentlyCars;
+                                  return Container(
+                                    height: cars.isEmpty ? 0 : 310,
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 16, 0, 16),
+                                    child: GridView.builder(
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 1,
+                                        mainAxisSpacing: 16.0,
+                                        mainAxisExtent: 250,
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8),
+                                      itemBuilder: (context, index) {
+                                        return ItemCar(car: cars[index]);
+                                      },
+                                      itemCount: cars.length,
+                                      scrollDirection: Axis.horizontal,
+                                    ),
+                                  );
+                                }),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -739,9 +784,9 @@ class _CarDetailViewState extends State<CarDetailView> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
-                    '${carReviews.length} reviews and comments',
+                    '${carReviews.length} đánh giá và bình luận',
                     textAlign: TextAlign.center,
                     style: AppText.body2,
                   ),

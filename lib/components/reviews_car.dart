@@ -47,7 +47,7 @@ class ReviewsCardWidget extends StatelessWidget {
                       const Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(4, 0, 12, 0),
                         child: Text(
-                          'Verified Purchase',
+                          'Đã xác minh',
                           maxLines: 1,
                           style: TextStyle(
                             fontSize: 12,
@@ -114,7 +114,7 @@ class ReviewsCardWidget extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      carReview.createdAs,
+                      carReview.createdAt,
                       maxLines: 1,
                       style: const TextStyle(
                         fontSize: 12,

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:carx/data/model/delivery_address.dart';
 import 'package:carx/data/model/dio_response.dart';
+import 'package:carx/data/model/distributor.dart';
 import 'package:carx/utilities/api_constants.dart';
 import 'package:carx/service/auth/auth_exceptions.dart';
 import 'package:carx/data/client/dio_client.dart';
@@ -175,6 +176,29 @@ class AuthReponsitoryImpl implements AuthReponsitory {
       return false;
     } catch (e) {
       throw (Exception('Error'));
+    }
+  }
+
+  @override
+  Future<Distributor?> fetchDistributorByUid(String uId) async {
+    try {
+      final response = await _dio.post(
+        FETCH_DISTRIBUTOR_BY_UID,
+        data: FormData.fromMap(<String, dynamic>{'id': uId}),
+      );
+      if (response.statusCode == 200) {
+        DioReponse dioResponse = DioReponse.fromJson(jsonDecode(response.data));
+        if (dioResponse.status == 'OK' &&  dioResponse.data != null) {
+          final distributor = Distributor.fromJson(dioResponse.data);
+          return distributor;
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception('Error exception $e');
     }
   }
 }

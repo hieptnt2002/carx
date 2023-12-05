@@ -1,4 +1,4 @@
-import 'package:carx/components/shimmer_load_car.dart';
+import 'package:carx/components/shimmer_car.dart';
 import 'package:carx/data/presentation/car_by_brand/bloc/car_by_brand_event.dart';
 import 'package:carx/data/presentation/car_by_brand/bloc/car_by_brand_state.dart';
 
@@ -43,9 +43,9 @@ class CarByBrandScreen extends StatelessWidget {
                     );
                   },
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    mainAxisExtent: 280,
-                    mainAxisSpacing: 16.0,
-                    crossAxisSpacing: 16.0,
+                    mainAxisExtent: 260,
+                    mainAxisSpacing: 4.0,
+                    crossAxisSpacing: 4.0,
                     childAspectRatio: 1.0,
                     maxCrossAxisExtent: 300,
                   ),
@@ -58,12 +58,12 @@ class CarByBrandScreen extends StatelessWidget {
                 itemCount: 8,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return const ShimmerLoadCar();
+                  return shimmerCar();
                 },
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  mainAxisExtent: 280,
-                  mainAxisSpacing: 16.0,
-                  crossAxisSpacing: 16.0,
+                  mainAxisExtent: 260,
+                  mainAxisSpacing: 4.0,
+                  crossAxisSpacing: 4.0,
                   childAspectRatio: 1.0,
                   maxCrossAxisExtent: 300,
                 ),

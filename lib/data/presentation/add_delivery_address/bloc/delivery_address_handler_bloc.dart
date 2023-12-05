@@ -55,27 +55,27 @@ class DeliveryAddressHandlerBloc
     int defaultAddress = state.isDefault ? 1 : 0;
     if (recipientName.isEmpty) {
       emit(state.copyWith(
-        textError: 'Please enter your full name!',
+        textError: 'Vui lòng nhập tên đầy đủ của bạn!',
         status: DeliveryAddressHandlerStatus.failure,
       ));
     } else if (phoneNumber.isEmpty) {
       emit(state.copyWith(
-        textError: 'Please enter your phone number!',
+        textError: 'Vui lòng điền số điện thoại của bạn!',
         status: DeliveryAddressHandlerStatus.failure,
       ));
     } else if (!isPhoneNumber(phoneNumber) || phoneNumber.length > 11) {
       emit(state.copyWith(
-        textError: 'Invalid phone number format!',
+        textError: 'Định dạng số điện thoại không hợp lệ!',
         status: DeliveryAddressHandlerStatus.failure,
       ));
     } else if (address.isEmpty) {
       emit(state.copyWith(
-        textError: 'Please enter your address!',
+        textError: 'Vui lòng nhập địa chỉ của bạn!',
         status: DeliveryAddressHandlerStatus.failure,
       ));
     } else if (typeAddress.isEmpty) {
       emit(state.copyWith(
-        textError: 'Please enter your type of address!',
+        textError: 'Vui lòng chọn loại địa chỉ!',
         status: DeliveryAddressHandlerStatus.failure,
       ));
     } else {
@@ -94,7 +94,7 @@ class DeliveryAddressHandlerBloc
         emit(state.copyWith(status: DeliveryAddressHandlerStatus.success));
       } catch (e) {
         emit(state.copyWith(
-          textError: 'Error Server',
+          textError: 'Lỗi máy chủ',
           status: DeliveryAddressHandlerStatus.failure,
         ));
       }
@@ -112,13 +112,13 @@ class DeliveryAddressHandlerBloc
       } else {
         emit(state.copyWith(
           status: DeliveryAddressHandlerStatus.failure,
-          textError: 'Cannot delete because the address is in use!',
+          textError: 'Không thể xóa vì địa chỉ đang được sử dụng!',
         ));
       }
     } catch (e) {
       emit(state.copyWith(
         status: DeliveryAddressHandlerStatus.failure,
-        textError: 'Error!!!',
+        textError: 'Lỗi máy chủ!!!',
       ));
     }
     emit(state.copyWith(status: DeliveryAddressHandlerStatus.initial));

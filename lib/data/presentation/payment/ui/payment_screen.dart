@@ -12,6 +12,7 @@ import 'package:carx/data/presentation/order_success/order_success_view.dart';
 import 'package:carx/loading/loading.dart';
 import 'package:carx/utilities/app_colors.dart';
 import 'package:carx/utilities/app_text.dart';
+import 'package:carx/utilities/util.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,7 +54,7 @@ class _PaymentSreenState extends State<PaymentSreen> {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Payments'),
+              title: const Text('Thanh toán'),
             ),
             bottomNavigationBar: Container(
               width: MediaQuery.of(context).size.width,
@@ -77,12 +78,12 @@ class _PaymentSreenState extends State<PaymentSreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '\$${order.totalAmount}/day',
+                        formattedAmountCar(order.totalAmount!),
                         style: AppText.title2,
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '14% off',
+                        '0% off',
                         style: AppText.title2
                             .copyWith(color: AppColors.colorSuccess),
                       ),
@@ -101,9 +102,9 @@ class _PaymentSreenState extends State<PaymentSreen> {
                       side: const BorderSide(
                           width: 1, color: AppColors.lightGray),
                     ),
-                    child: const Text(
-                      'Continues',
-                      style: AppText.subtitle2,
+                    child:  Text(
+                      'Thanh toán',
+                     style: AppText.subtitle2.copyWith(color: AppColors.white),
                     ),
                   ),
                 ],
@@ -115,7 +116,7 @@ class _PaymentSreenState extends State<PaymentSreen> {
                 children: [
                   const Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Text('SAVED CARDS'),
+                    child: Text('THẺ ĐÃ LƯU'),
                   ),
                   GridView.builder(
                     gridDelegate:
@@ -183,7 +184,7 @@ class _PaymentSreenState extends State<PaymentSreen> {
                   const SizedBox(height: 16),
                   const Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Text('WALLETS'),
+                    child: Text('VÍ'),
                   ),
                   Container(
                     height: 48,
@@ -241,13 +242,13 @@ class _PaymentSreenState extends State<PaymentSreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Cash on delivery',
+                            'Thanh toán khi nhận xe',
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w500),
                           ),
                           SizedBox(height: 4),
                           Text(
-                            'Nominal fee of 5 cents will be changed',
+                            'Thanh toán ngay sau khi nhận được xe',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 12,
@@ -276,7 +277,7 @@ class _PaymentSreenState extends State<PaymentSreen> {
                       onTap: () {},
                       leading: const Icon(Icons.wallet_giftcard_rounded),
                       title: const Text(
-                        'Apply promo code',
+                        'Áp dụng mã khuyến mãi',
                         style: TextStyle(fontSize: 16),
                       ),
                       trailing: const Icon(
@@ -294,20 +295,20 @@ class _PaymentSreenState extends State<PaymentSreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'PRICE DETAILS',
-                           style: AppText.subtitle3,
+                          'CHI TIẾT GIÁ',
+                          style: AppText.subtitle3,
                         ),
                         const SizedBox(height: 24.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              'Price',
-                               style: AppText.body2,
+                              'Tổng tiền xe',
+                              style: AppText.body2,
                             ),
                             Text(
-                              '\$ ${order.totalAmount}',
-                                style: AppText.subtitle3,
+                             formattedAmountCar(order.totalAmount!),
+                              style: AppText.subtitle3,
                             ),
                           ],
                         ),
@@ -316,12 +317,13 @@ class _PaymentSreenState extends State<PaymentSreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              'Delivery Charges',
+                              'Phí giao xe',
                               style: AppText.body2,
                             ),
                             Text(
                               '${order.deliveryCharges}',
-                               style: AppText.subtitle3.copyWith(color: AppColors.colorSuccess),
+                              style: AppText.subtitle3
+                                  .copyWith(color: AppColors.colorSuccess),
                             ),
                           ],
                         ),
@@ -330,12 +332,12 @@ class _PaymentSreenState extends State<PaymentSreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Discount',
-                               style: AppText.body2,
+                              'Voucher giảm giá',
+                              style: AppText.body2,
                             ),
                             Text(
                               '0',
-                               style: AppText.subtitle3,
+                              style: AppText.subtitle3,
                             ),
                           ],
                         ),
@@ -348,11 +350,11 @@ class _PaymentSreenState extends State<PaymentSreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              'Total Amount',
-                                style: AppText.subtitle3,
+                              'Tổng thanh toán',
+                              style: AppText.subtitle3,
                             ),
                             Text(
-                              '\$${order.totalAmount}',
+                              formattedAmountCar(order.totalAmount!),
                               style: AppText.subtitle3,
                             ),
                           ],

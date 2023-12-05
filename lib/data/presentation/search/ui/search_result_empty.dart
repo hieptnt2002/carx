@@ -25,7 +25,7 @@ class SearchResultEmptyWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    'Sorry, no results found!',
+                    'Rất tiếc, không tìm thấy kết quả nào!',
                     style: TextStyle(
                       color: AppColors.primary,
                       fontSize: 16,
@@ -34,7 +34,7 @@ class SearchResultEmptyWidget extends StatelessWidget {
                   ),
                   SizedBox(height: 6),
                   Text(
-                    'Please check the spelling or try searching for something else',
+                    'Vui lòng kiểm tra chính tả hoặc thử tìm kiếm nội dung khác.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.primary,

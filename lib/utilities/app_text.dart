@@ -7,7 +7,7 @@ class AppText {
     fontWeight: FontWeight.bold,
     color: AppColors.white,
   );
- 
+
   static const title1 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
@@ -22,7 +22,7 @@ class AppText {
   static const subtitle1 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
-    color: AppColors.primary,
+    color: AppColors.fontColor,
   );
   static const subtitle2 = TextStyle(
     fontSize: 16,
@@ -39,7 +39,7 @@ class AppText {
     fontWeight: FontWeight.w500,
     color: AppColors.secondary,
   );
-static const bodyPrimary = TextStyle(
+  static const bodyPrimary = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: AppColors.primary,
@@ -54,6 +54,12 @@ static const bodyPrimary = TextStyle(
     fontWeight: FontWeight.w500,
     color: AppColors.grey,
   );
+  static const bodyDefault = TextStyle(
+    fontSize: 14,
+    color: AppColors.fontColor,
+  );
   static const body2 = TextStyle(
       fontSize: 14, fontWeight: FontWeight.w400, color: AppColors.fontColor);
+  static const bodySmall = TextStyle(
+      fontSize: 12, fontWeight: FontWeight.w400, color: AppColors.fontColor);
 }

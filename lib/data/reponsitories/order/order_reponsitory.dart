@@ -12,4 +12,6 @@ abstract class OrderReponsitory {
     required String status,
     String? paymentStatus,
   });
+
+  Future<List<OrderManagement>> fetchOrdersByDistributor(int id);
 }

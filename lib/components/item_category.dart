@@ -20,7 +20,7 @@ class ItemCategory extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            if (brand.name == 'All') {
+            if (brand.name == 'Tất cả') {
               controller.updateItem(1);
             } else {
               Navigator.pushNamed(context, Routes.routeCarByBrand,

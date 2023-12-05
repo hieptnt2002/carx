@@ -13,10 +13,16 @@ class PersonalBloc extends Bloc<PersonalEvent, PersonalState> {
         try {
           final uid = provider.currentUser?.id;
 
-          final user = await authReponsitory.fetUserById(uid!);
+          List<dynamic> results = await Future.wait([
+            authReponsitory.fetUserById(uid!),
+            authReponsitory.fetchDistributorByUid(uid),
+          ]);
+
+          final user = results[0];
+          final distributor = results[1];
 
           emit(state.copyWith(
-              user: user, fetchUserStatus: FetchUserStatus.success));
+              user: user, distributor: distributor,fetchUserStatus: FetchUserStatus.success));
         } catch (e) {
           emit(state.copyWith(fetchUserStatus: FetchUserStatus.failure));
         }

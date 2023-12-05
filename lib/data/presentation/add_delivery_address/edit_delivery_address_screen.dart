@@ -61,7 +61,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Address'),
+        title: const Text('Chỉnh Sửa Địa Chỉ'),
       ),
       body: WillPopScope(
         onWillPop: () async {
@@ -78,7 +78,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
               } else if (state.status == DeliveryAddressHandlerStatus.success) {
                 Loading().hide();
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Successfully'),
+                  content: Text('Đã lưu'),
                   backgroundColor: AppColors.colorSuccess,
                 ));
                 Navigator.pop(context, true);
@@ -98,7 +98,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                       const Padding(
                         padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
                         child: Text(
-                          'Contact',
+                          'Liên hệ',
                           style: AppText.bodyGrey,
                         ),
                       ),
@@ -113,7 +113,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                           initialValue: deliveryAddress.recipientName,
                           cursorColor: AppColors.primary,
                           decoration: const InputDecoration(
-                            hintText: 'Enter full name',
+                            hintText: 'Nhập tên người nhận',
                             border: InputBorder.none,
                           ),
                           style: const TextStyle(color: AppColors.primary),
@@ -135,7 +135,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                           cursorColor: AppColors.primary,
                           keyboardType: TextInputType.phone,
                           decoration: const InputDecoration(
-                            hintText: 'Enter phone number',
+                            hintText: 'Nhập số điện thoại',
                             border: InputBorder.none,
                           ),
                           style: const TextStyle(color: AppColors.primary),
@@ -147,7 +147,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                       const Padding(
                         padding: EdgeInsets.fromLTRB(12, 24, 12, 12),
                         child: Text(
-                          'Address',
+                          'Địa chỉ nhận',
                           style: AppText.bodyGrey,
                         ),
                       ),
@@ -162,7 +162,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                           initialValue: deliveryAddress.address,
                           cursorColor: AppColors.primary,
                           decoration: const InputDecoration(
-                            hintText: 'Enter address',
+                            hintText: 'Nhập địa chỉ giao(nhận)',
                             border: InputBorder.none,
                           ),
                           style: const TextStyle(color: AppColors.primary),
@@ -183,7 +183,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                           children: [
                             const Expanded(
                               child: Text(
-                                'Type of address',
+                                'Loại địa chỉ',
                                 style: AppText.bodyFontColor,
                               ),
                             ),
@@ -262,7 +262,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              'Set as default address',
+                              'Đặt địa chỉ mặc định',
                               style: AppText.bodyFontColor,
                             ),
                             Switch(
@@ -297,7 +297,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 16, 0, 16)),
                               child: const Text(
-                                'Save Address',
+                                'Lưu Địa Chỉ',
                                 style: AppText.subtitle2,
                               ),
                             ),
@@ -327,7 +327,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 16, 0, 16)),
                               child: Text(
-                                'Remove Address',
+                                'Xóa Địa Chỉ',
                                 style: AppText.body1
                                     .copyWith(color: Colors.redAccent),
                               ),
@@ -363,7 +363,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
             child: Column(
               children: [
                 const Text(
-                  'Delete Address',
+                  'Xóa Địa Chỉ',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -372,7 +372,7 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  'Do you want to remove this delivery address?',
+                  'Bạn có muốn xóa địa chỉ giao hàng này không?',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w300,
@@ -387,18 +387,6 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                       Expanded(
                         child: TextButton(
                           onPressed: () {
-                            Navigator.pop(context, false);
-                          },
-                          style: TextButton.styleFrom(
-                            foregroundColor: AppColors.primary,
-                            shadowColor: Colors.transparent,
-                          ),
-                          child: const Text('No'),
-                        ),
-                      ),
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () {
                             Navigator.pop(context, true);
                           },
                           style: TextButton.styleFrom(
@@ -406,11 +394,23 @@ class _EditDeliveryAddressScreenState extends State<EditDeliveryAddressScreen> {
                             shadowColor: Colors.transparent,
                           ),
                           child: const Text(
-                            'Yes',
+                            'Có',
                             style: TextStyle(color: Colors.redAccent),
                           ),
                         ),
-                      )
+                      ),
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.primary,
+                            shadowColor: Colors.transparent,
+                          ),
+                          child: const Text('Không'),
+                        ),
+                      ),
                     ],
                   ),
                 ),

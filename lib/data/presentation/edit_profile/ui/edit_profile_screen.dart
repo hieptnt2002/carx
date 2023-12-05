@@ -53,7 +53,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Edit Profile',
+          'Chỉnh Sửa Thông Tin',
           style: TextStyle(color: Colors.white),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
@@ -70,7 +70,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               Loading().hide();
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text(
-                  'Profile saved successfully',
+                  'Đã lưu',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -173,7 +173,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                                 child: Column(
                                                   children: [
                                                     Text(
-                                                      'Select Image Option',
+                                                      'Chọn tùy chọn hình ảnh',
                                                       style: AppText.title1
                                                           .copyWith(
                                                               color: AppColors
@@ -191,7 +191,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                                         ),
                                                       ),
                                                       title: Text(
-                                                        'Take a photo',
+                                                        'Chụp ảnh',
                                                         style: AppText.subtitle1
                                                             .copyWith(
                                                                 color: AppColors
@@ -215,7 +215,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                                         ),
                                                       ),
                                                       title: Text(
-                                                        'Choose photo from gallery',
+                                                        'Chọn ảnh từ thư viện',
                                                         style: AppText.subtitle1
                                                             .copyWith(
                                                                 color: AppColors
@@ -292,7 +292,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                 cursorColor: AppColors.primary,
                                 initialValue: state.name,
                                 decoration: InputDecoration(
-                                  hintText: 'Username',
+                                  hintText: 'Tên người dùng',
                                   prefixIcon: const Icon(Icons.person),
                                   border: UnderlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
@@ -319,7 +319,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                 initialValue: state.address,
                                 cursorColor: AppColors.primary,
                                 decoration: InputDecoration(
-                                  hintText: 'Address',
+                                  hintText: 'Địa chỉ',
                                   prefixIcon:
                                       const Icon(Icons.location_city_outlined),
                                   border: UnderlineInputBorder(
@@ -347,7 +347,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                 initialValue: state.phone,
                                 cursorColor: AppColors.primary,
                                 decoration: InputDecoration(
-                                  hintText: 'Phone',
+                                  hintText: 'Số điện thoại',
                                   prefixIcon:
                                       const Icon(Icons.phone_android_rounded),
                                   border: UnderlineInputBorder(
@@ -383,7 +383,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                         ),
                                         const SizedBox(width: 12),
                                         Text(
-                                          'Gender',
+                                          'Giới tính',
                                           style: AppText.subtitle1.copyWith(
                                               color: AppColors.primary),
                                         ),
@@ -395,7 +395,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                         Expanded(
                                           child: RadioListTile(
                                             title: const Text(
-                                              'Male',
+                                              'Nam',
                                               style: TextStyle(
                                                   color: AppColors.primary),
                                             ),
@@ -419,7 +419,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                         Expanded(
                                           child: RadioListTile(
                                             title: const Text(
-                                              'Female',
+                                              'Nữ',
                                               style: TextStyle(
                                                   color: AppColors.primary),
                                             ),
@@ -446,7 +446,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                         Expanded(
                                           child: RadioListTile(
                                             title: const Text(
-                                              'Other',
+                                              'Khác',
                                               style: TextStyle(
                                                   color: AppColors.primary),
                                             ),
@@ -486,9 +486,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                           bool isSave =
                                               await showSaveProfileDialog(
                                             context: context,
-                                            title: 'Save Profile',
+                                            title: 'Lưu thông tin',
                                             content:
-                                                'Do you want to save your profile after editing?',
+                                                'Bạn có muốn lưu thông tin của mình sau khi chỉnh sửa?',
                                           );
                                           if (isSave) {
                                             profileBloc
@@ -503,7 +503,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                               vertical: 12),
                                         ),
                                         child: Text(
-                                          'Save',
+                                          'Lưu',
                                           style: AppText.title1.copyWith(
                                               color: AppColors.secondary),
                                         ),
