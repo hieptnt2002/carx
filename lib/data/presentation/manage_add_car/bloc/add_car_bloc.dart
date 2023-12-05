@@ -158,19 +158,7 @@ class AddCarBloc extends Bloc<AddCarEvent, AddCarState> {
     if (!checkField) {
       try {
         await reponsitory.addCar(mapCar);
-        emit(state.copyWith(
-          statusAddCar: AddCarStatus.success,
-          imageFiles: [],
-          nameCar: '',
-          descriptions: '',
-          brandId: '',
-          price: '',
-          quantity: '',
-          seats: '',
-          topSpeed: '',
-          horsePower: '',
-          engine: '',
-        ));
+        emit(state.copyWith(statusAddCar: AddCarStatus.success));
       } catch (e) {
         emit(state.copyWith(statusAddCar: AddCarStatus.failure));
       }
