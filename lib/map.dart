@@ -50,7 +50,7 @@ class _MapGoogleWidgetState extends State<MapGoogleWidget> {
 
   @override
   void initState() {
-    // getPolyPoints();
+    getPolyPoints();
     getLocation();
     super.initState();
   }
