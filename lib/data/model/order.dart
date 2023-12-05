@@ -11,6 +11,7 @@ class Order extends Equatable {
   int? amount;
   int? totalAmount;
   int? deliveryCharges;
+  int? quantity;
   String? startTime;
   String? endTime;
   String? paymentstatus;
@@ -27,6 +28,7 @@ class Order extends Equatable {
       this.amount,
       this.totalAmount,
       this.deliveryCharges,
+      this.quantity,
       this.startTime,
       this.endTime,
       this.paymentstatus,
@@ -43,6 +45,7 @@ class Order extends Equatable {
     int? amount,
     int? totalAmount,
     int? deliveryCharges,
+    int? quantity,
     String? startTime,
     String? endTime,
     String? paymentstatus,
@@ -59,6 +62,7 @@ class Order extends Equatable {
           amount: amount ?? this.amount,
           totalAmount: totalAmount ?? this.totalAmount,
           deliveryCharges: deliveryCharges ?? this.deliveryCharges,
+          quantity: quantity ?? this.quantity,
           startTime: startTime ?? this.startTime,
           endTime: endTime ?? this.endTime,
           paymentstatus: paymentstatus ?? this.paymentstatus,
@@ -75,6 +79,7 @@ class Order extends Equatable {
     amount = int.tryParse(json['amount']);
     totalAmount = int.tryParse(json['total_amount']);
     deliveryCharges = int.tryParse(json['delivery_charges']);
+    quantity = int.tryParse(json['quantity']);
     startTime = json['start_time'];
     endTime = json['end_time'];
     paymentstatus = json['payment_status'];
@@ -93,6 +98,7 @@ class Order extends Equatable {
     data['amount'] = amount;
     data['total_amount'] = totalAmount;
     data['delivery_charges'] = deliveryCharges;
+    data['quantity'] = quantity;
     data['start_time'] = startTime;
     data['end_time'] = endTime;
     data['payment_status'] = paymentstatus;
@@ -113,6 +119,7 @@ class Order extends Equatable {
         amount,
         totalAmount,
         deliveryCharges,
+        quantity,
         startTime,
         endTime,
         paymentstatus,

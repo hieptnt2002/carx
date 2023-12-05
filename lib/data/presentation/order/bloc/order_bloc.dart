@@ -53,6 +53,28 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<OrderButtonClicked>(
       (event, emit) => _onOrderButtonClick(event, emit),
     );
+    on<DecrementQuantityOrderEvent>(
+      (event, emit) {
+        int quantity = state.quantity - 1;
+        if (quantity >= 1) {
+          int price = state.car!.price * state.rentalDuration * quantity;
+          int totalAmount = price + state.delivery;
+          emit(state.copyWith(
+              quantity: quantity, price: price, totalAmount: totalAmount));
+        }
+      },
+    );
+    on<IncrementQuantityOrderEvent>(
+      (event, emit) {
+        int quantity = state.quantity + 1;
+        if (quantity <= state.car!.quantity) {
+          int price = state.car!.price * state.rentalDuration * quantity;
+          int totalAmount = price + state.delivery;
+          emit(state.copyWith(
+              quantity: quantity, price: price, totalAmount: totalAmount));
+        }
+      },
+    );
   }
 
   void _fetchDeliveryAddress(
@@ -107,6 +129,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   void _fetchEndTime(EndTimeUpdated event, Emitter emit) async {
     DateTime? endTime = state.endTime;
     DateTime? fromTime = state.startTime;
+    int quantity = state.quantity;
     if (fromTime != null) {
       final selectedDate = await showDatePicker(
         context: event.context,
@@ -132,7 +155,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           Duration duration = endTime.difference(fromTime);
           emit(state.copyWith(rentalDuration: duration.inDays));
 
-          int price = event.pricePerDay * state.rentalDuration;
+          int price = event.pricePerDay * state.rentalDuration * quantity;
           int totalAmount = price + state.delivery;
           emit(state.copyWith(
             endTime: endTime,
@@ -143,7 +166,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       }
     } else {
       ScaffoldMessenger.of(event.context).showSnackBar(const SnackBar(
-        content: Text('Please choose From Time first!'),
+        content: Text('Vui lòng chọn thời gian bắt đầu thuê trước!'),
       ));
     }
   }
@@ -154,15 +177,15 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     if (state.deliveryAddress == null) {
       ScaffoldMessenger.of(event.context).showSnackBar(const SnackBar(
-        content: Text('Please add your address before placing an order!'),
+        content: Text('Vui lòng thêm địa chỉ của bạn trước khi đặt xe!'),
       ));
     } else if (state.startTime == null) {
       ScaffoldMessenger.of(event.context).showSnackBar(const SnackBar(
-        content: Text('Please choose From Time!'),
+        content: Text('Vui lòng chọn thời gian bắt đầu trước!'),
       ));
     } else if (state.endTime == null) {
       ScaffoldMessenger.of(event.context).showSnackBar(const SnackBar(
-        content: Text('Please choose End Time!'),
+        content: Text('Vui lòng chọn thời gian kết thúc thuê!'),
       ));
     } else {
       String strStartTime =
@@ -177,8 +200,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           startTime: strStartTime,
           endTime: strEndTime,
           deliveryCharges: state.delivery,
+          quantity: state.quantity,
           userId: AuthService.firebase().currentUser!.id,
-          status: 'Waiting For Confirmation',
+          status: 'Chờ xác nhận',
           carId: state.car!.id.toString(),
           addressId: state.deliveryAddress?.id);
 

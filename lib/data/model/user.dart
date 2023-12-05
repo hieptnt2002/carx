@@ -10,7 +10,7 @@ class User extends Equatable {
   final String? email;
   final String? phone;
   final String? image;
-  late final String? address;
+  final String? address;
   final String? gender;
   final String? token;
 
@@ -61,16 +61,6 @@ class User extends Equatable {
     return dataUser;
   }
 
-  Map<String, dynamic> toJsonNotImage() {
-    final Map<String, dynamic> dataUser = <String, dynamic>{};
-    dataUser['id'] = id;
-    dataUser['name'] = name;
-    dataUser['email'] = email;
-    dataUser['address'] = address;
-    dataUser['phone'] = phone;
-    dataUser['gender'] = gender;
-    return dataUser;
-  }
 
   @override
   List<Object?> get props =>

@@ -3,6 +3,7 @@
 import 'package:carx/loading/loading_screen.dart';
 import 'package:carx/service/auth/firebase_auth_provider.dart';
 import 'package:carx/utilities/app_routes.dart';
+import 'package:carx/utilities/app_text.dart';
 import 'package:carx/view/login/bloc/auth_bloc.dart';
 import 'package:carx/view/login/bloc/auth_event.dart';
 import 'package:carx/view/login/bloc/auth_state.dart';
@@ -69,7 +70,7 @@ class RegisterState extends State<RegisterView> {
           if (state.isLoading) {
             LoadingScreen().show(
                 context: context,
-                text: state.loadingText ?? 'Please wait a moment');
+                text: state.loadingText ?? 'Xin vui lòng chờ trong giây lát!');
           } else if (!state.isLoading) {
             LoadingScreen().hide();
           }
@@ -79,21 +80,20 @@ class RegisterState extends State<RegisterView> {
           } else if (state is AuthStateRegistering) {
             if (state.exception is InvalidEmailAuthException) {
               await showErrorDialog(
-                  context: context, text: 'Invalid Email Auth Exception');
+                  context: context, text: 'Email không hợp lệ*');
             } else if (state.exception is EmailAlreadyInUseAuthException) {
               await showErrorDialog(
-                  context: context,
-                  text: 'Email Already In Use Auth Exception');
+                  context: context, text: 'Email đã được sử dụng*');
             } else if (state.exception is WeakPasswordAuthException) {
-              await showErrorDialog(
-                  context: context, text: 'WeakPasswordAuthException');
+              await showErrorDialog(context: context, text: 'Mật khẩu yếu*');
             } else if (state.exception is NotInputUserNameException) {
-              await showErrorDialog(context: context, text: 'No Input User');
+              await showErrorDialog(
+                  context: context, text: 'Không có người dùng*');
             } else if (state.exception is PasswordIncorrectException) {
               await showErrorDialog(
-                  context: context, text: 'PasswordIncorrectException');
+                  context: context, text: 'Mật khẩu không chính xác');
             } else if (state.exception is GenericAuthException) {
-              await showErrorDialog(context: context, text: 'Error');
+              await showErrorDialog(context: context, text: 'Lỗi ');
             }
           }
         },
@@ -105,18 +105,24 @@ class RegisterState extends State<RegisterView> {
                   context.read<AuthBloc>().add(const AuthEventLogOut());
                 },
                 icon: const Icon(Icons.arrow_back)),
-            title: const Text('Register'),
+            title: const Text('Đăng ký'),
           ),
           body: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.of(context).size.height - 48,
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(12, 48, 12, 12),
+                padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 12),
                 child: Column(
                   children: [
-                    const Spacer(),
+                      Image.asset(
+                    'assets/images/logo-dark.png',
+                    fit: BoxFit.contain,
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: 120,
+                  ),
+                 
                     const Text(
-                      'CREATE NEW ACCOUNT',
+                      'TẠO TÀI KHOẢN',
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -127,7 +133,7 @@ class RegisterState extends State<RegisterView> {
                     const Padding(
                       padding: EdgeInsets.only(top: 6),
                       child: Text(
-                        'Please enter info to create account',
+                        'Vui lòng nhập thông tin để tạo tài khoản',
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -143,7 +149,7 @@ class RegisterState extends State<RegisterView> {
                       autocorrect: false,
                       cursorColor: Colors.grey,
                       decoration: const InputDecoration(
-                        hintText: 'Name',
+                        hintText: 'Tên người dùng',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(12),
@@ -170,7 +176,7 @@ class RegisterState extends State<RegisterView> {
                       autocorrect: false,
                       cursorColor: Colors.grey,
                       decoration: const InputDecoration(
-                        hintText: 'Email',
+                        hintText: 'Email của bạn',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(12),
@@ -197,9 +203,9 @@ class RegisterState extends State<RegisterView> {
                       cursorColor: Colors.grey,
                       obscureText: _hiddenPassword,
                       decoration: InputDecoration(
-                          hintText: 'Password',
+                          hintText: 'Mật khẩu',
                           prefixIcon: const Icon(Icons.lock_person_outlined),
-                          semanticCounterText: 'Password',
+                          semanticCounterText: 'Mật khẩu',
                           suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
@@ -236,7 +242,7 @@ class RegisterState extends State<RegisterView> {
                       cursorColor: Colors.grey,
                       obscureText: _hiddenConfirmPassword,
                       decoration: InputDecoration(
-                          hintText: 'Confirm password',
+                          hintText: 'Xác nhận mật khẩu',
                           prefixIcon: const Icon(Icons.lock_person_outlined),
                           suffixIcon: IconButton(
                             onPressed: () {
@@ -294,7 +300,7 @@ class RegisterState extends State<RegisterView> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(999))),
                         child: const Text(
-                          'Register',
+                          'Đăng ký',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -308,7 +314,7 @@ class RegisterState extends State<RegisterView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'You have an account',
+                          'Bạn đã có tài khoản?',
                           style: TextStyle(fontSize: 16),
                         ),
                         TextButton(
@@ -317,12 +323,11 @@ class RegisterState extends State<RegisterView> {
                                   .read<AuthBloc>()
                                   .add(const AuthEventLogOut());
                             },
-                            child: const Text(
-                              'Login',
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 16,
-                                  color: AppColors.secondary),
+                            child: Text(
+                              'Đăng nhập',
+                              style: AppText.subtitle1.copyWith(
+                                  color: AppColors.primary,
+                                  decoration: TextDecoration.underline),
                             ))
                       ],
                     ),

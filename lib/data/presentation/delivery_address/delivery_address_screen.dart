@@ -27,7 +27,7 @@ class _DeliveryAddressScreenState extends State<DeliveryAddressScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'My Addresses',
+          'Địa Chỉ Của Bạn',
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -59,7 +59,7 @@ class _DeliveryAddressScreenState extends State<DeliveryAddressScreen> {
                           color: AppColors.secondary,
                         ),
                         label: const Text(
-                          'Add New Address',
+                          'Thêm Địa Chỉ Mới',
                           style: TextStyle(
                               fontSize: 14,
                               color: AppColors.secondary,

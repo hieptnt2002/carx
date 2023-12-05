@@ -18,7 +18,7 @@ class OrderManagementDetailBloc
         try {
           await reponsitory.updateOrder(
             order: event.order,
-            status: 'Cancelled',
+            status: 'Đã hủy',
           );
           emit(OrderCancelledSuccessState());
         } catch (e) {

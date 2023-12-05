@@ -1,3 +1,4 @@
+import 'package:carx/data/model/car.dart';
 import 'package:carx/data/model/car_detail.dart';
 import 'package:carx/data/model/car_review.dart';
 
@@ -11,12 +12,14 @@ class CarDetailState extends Equatable {
   final Distributor? distributor;
   final CarDetailStatus detailStatus;
   final List<CarReview> carReviews;
+  final List<Car> recentlyCars;
   final bool isFavorite;
   const CarDetailState({
     this.carDetail,
     this.distributor,
     required this.detailStatus,
     required this.carReviews,
+    required this.recentlyCars,
     required this.isFavorite,
   });
 
@@ -25,6 +28,7 @@ class CarDetailState extends Equatable {
         distributor = null,
         detailStatus = CarDetailStatus.initial,
         carReviews = [],
+        recentlyCars = [],
         isFavorite = false;
 
   CarDetailState copyWith({
@@ -32,6 +36,7 @@ class CarDetailState extends Equatable {
     Distributor? distributor,
     CarDetailStatus? detailStatus,
     List<CarReview>? carReviews,
+    List<Car>? recentlyCars,
     bool? isFavorite,
   }) =>
       CarDetailState(
@@ -39,6 +44,7 @@ class CarDetailState extends Equatable {
         distributor: distributor ?? this.distributor,
         detailStatus: detailStatus ?? this.detailStatus,
         carReviews: carReviews ?? this.carReviews,
+        recentlyCars: recentlyCars ?? this.recentlyCars,
         isFavorite: isFavorite ?? this.isFavorite,
       );
 
@@ -48,6 +54,7 @@ class CarDetailState extends Equatable {
         distributor,
         detailStatus,
         carReviews,
+        recentlyCars,
         isFavorite,
       ];
 }

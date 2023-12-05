@@ -1,6 +1,7 @@
 import 'package:carx/data/model/slider.dart';
 import 'package:carx/data/model/brand.dart';
 import 'package:carx/data/model/car.dart';
+import 'package:carx/data/model/trending_category.dart';
 
 import 'package:equatable/equatable.dart';
 
@@ -9,49 +10,50 @@ enum HomeStatus { initial, loading, success, failure }
 class HomeState extends Equatable {
   final List<Brand> brands;
   final List<Car> cars;
-  final List<Car> carsByBrand;
+  final List<Car> topDealCars;
   final List<SliderImage> sliders;
+  final List<TrendingCategory> trendingCategories;
   final int currentIndexSlider;
   final HomeStatus status;
-  final int selectedTab;
+
   const HomeState({
     required this.brands,
     required this.cars,
-    required this.carsByBrand,
+    required this.topDealCars,
     required this.sliders,
+    required this.trendingCategories,
     required this.currentIndexSlider,
     required this.status,
-    required this.selectedTab,
   });
   HomeState.initial()
-      : cars = [],
-        brands = [],
+      : brands = [],
+        cars = [],
         sliders = [],
-        carsByBrand = [],
+        topDealCars = [],
+        trendingCategories = [],
         currentIndexSlider = 0,
-        status = HomeStatus.initial,
-        selectedTab = 0;
+        status = HomeStatus.initial;
 
   HomeState copyWith({
     List<Brand>? brands,
     List<Car>? cars,
-    List<Car>? carsByBrand,
+    List<Car>? topDealCars,
     List<SliderImage>? sliders,
+    List<TrendingCategory>? trendingCategories,
     int? currentIndexSlider,
     HomeStatus? status,
-    int? selectedTab,
   }) =>
       HomeState(
         brands: brands ?? this.brands,
         cars: cars ?? this.cars,
-        carsByBrand: carsByBrand ?? this.carsByBrand,
+        topDealCars: topDealCars ?? this.topDealCars,
         sliders: sliders ?? this.sliders,
+        trendingCategories: trendingCategories ?? this.trendingCategories,
         currentIndexSlider: currentIndexSlider ?? this.currentIndexSlider,
         status: status ?? this.status,
-        selectedTab: selectedTab ?? this.selectedTab,
       );
 
   @override
   List<Object> get props =>
-      [brands, cars, carsByBrand, sliders,currentIndexSlider, status, selectedTab];
+      [brands, cars, topDealCars, sliders, trendingCategories, currentIndexSlider, status];
 }

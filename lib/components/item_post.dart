@@ -1,21 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carx/data/model/post.dart';
 import 'package:carx/utilities/app_colors.dart';
 import 'package:carx/utilities/app_text.dart';
 import 'package:flutter/material.dart';
 
-class PostItem extends StatefulWidget {
-  const PostItem({super.key});
+class PostItem extends StatelessWidget {
+  final Post post;
+  const PostItem({super.key, required this.post});
 
-  @override
-  State<PostItem> createState() => _PostItemState();
-}
-
-class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
+         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -24,7 +22,7 @@ class _PostItemState extends State<PostItem> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(999),
                   child: CachedNetworkImage(
-                    imageUrl: images[0],
+                    imageUrl: post.posterAvatar,
                     width: 52,
                     height: 52,
                     fit: BoxFit.cover,
@@ -42,14 +40,14 @@ class _PostItemState extends State<PostItem> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Ayaya Rental',
+                    Text(
+                      post.poster,
                       style: AppText.subtitle3,
                       maxLines: 1,
                       overflow: TextOverflow.clip,
                     ),
                     Text(
-                      '16 hours ago',
+                      createAt(post.createdAt),
                       style: AppText.body2.copyWith(color: AppColors.grey),
                     ),
                   ],
@@ -60,21 +58,21 @@ class _PostItemState extends State<PostItem> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              images[0],
+              post.content,
               style: AppText.body2,
               textAlign: TextAlign.justify,
             ),
           ),
           GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: images.length == 1 ? 1 : 2,
+                crossAxisCount: post.imagesPost.length == 1 ? 1 : 2,
                 childAspectRatio: 1.0,
                 mainAxisSpacing: 8.0,
                 crossAxisSpacing: 8.0,
                 mainAxisExtent: 200),
             itemBuilder: (context, index) {
               return CachedNetworkImage(
-                imageUrl: images[index],
+                imageUrl: post.imagesPost[index]['image'],
                 errorWidget: (context, url, error) {
                   return Image.asset('assets/images/logo-dark.png');
                 },
@@ -82,20 +80,20 @@ class _PostItemState extends State<PostItem> {
             },
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: images.length > 4 ? 4 : images.length,
+            itemCount: post.imagesPost.length,
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '10 like',
+                  '${post.likes} likes',
                   style: AppText.bodyFontColor,
                   textAlign: TextAlign.justify,
                 ),
-                Text(
-                  '1 comments',
+                const Text(
+                  '1 bình luận',
                   style: AppText.bodyFontColor,
                   textAlign: TextAlign.justify,
                 ),
@@ -121,7 +119,7 @@ class _PostItemState extends State<PostItem> {
                       ),
                       SizedBox(width: 6),
                       Text(
-                        'Like',
+                        'Thích',
                         style: AppText.bodyFontColor,
                       ),
                     ],
@@ -136,7 +134,7 @@ class _PostItemState extends State<PostItem> {
                       ),
                       SizedBox(width: 6),
                       Text(
-                        'Comment',
+                        'Bình luận',
                         style: AppText.bodyFontColor,
                       ),
                     ],
@@ -151,7 +149,7 @@ class _PostItemState extends State<PostItem> {
                       ),
                       SizedBox(width: 6),
                       Text(
-                        'Share',
+                        'Chia sẻ',
                         style: AppText.bodyFontColor,
                       ),
                     ],
@@ -164,12 +162,26 @@ class _PostItemState extends State<PostItem> {
       ),
     );
   }
-}
 
-const images = [
-  'https://upload.wikimedia.org/wikipedia/vi/0/0a/Genshin_Impact_cover.jpg',
-  'https://static.wikia.nocookie.net/gensin-impact/images/1/16/Rosaria_Card.png/revision/latest/scale-to-width/360?cb=20210330063015',
-  'https://static.wikia.nocookie.net/gensin-impact/images/1/16/Rosaria_Card.png/revision/latest/scale-to-width/360?cb=20210330063015',
-  'https://chevroletauto.110.vn/files/product/1597/16-04-2019/1_25tNLf51.png',
-  
-];
+  String createAt(String dataTime) {
+    DateTime parsedDateTime = DateTime.parse(dataTime);
+    DateTime currentDateTime = DateTime.now();
+
+    Duration difference = currentDateTime.difference(parsedDateTime);
+
+    int hours = difference.inHours;
+    int days = difference.inDays;
+
+    String timeDifference = '';
+
+    if (hours < 1 && days < 1) {
+      int minutes = difference.inMinutes;
+      timeDifference = '$minutes phút';
+    } else if (days < 1) {
+      timeDifference = '$hours giờ';
+    } else {
+      timeDifference = '$days ngày';
+    }
+    return timeDifference;
+  }
+}

@@ -13,6 +13,7 @@ import 'package:carx/data/reponsitories/auth/auth_reponsitory_impl.dart';
 import 'package:carx/loading/loading.dart';
 import 'package:carx/utilities/app_colors.dart';
 import 'package:carx/utilities/app_text.dart';
+import 'package:carx/utilities/util.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +37,7 @@ class _OrderViewState extends State<OrderView> {
     return BlocProvider(
       create: (context) => OrderBloc(AuthReponsitoryImpl.reponsitory())
         ..add(FetchDeliveryAddressOrderEvent())
-        ..add(DeliveryUpdated(5))
+        ..add(DeliveryUpdated(15000))
         ..add(CarUpdated(car))
         ..add(PriceUpdated(car.price)),
       child: BlocConsumer<OrderBloc, OrderState>(
@@ -51,7 +52,7 @@ class _OrderViewState extends State<OrderView> {
           return Scaffold(
             extendBody: true,
             appBar: AppBar(
-              title: const Text('Order'),
+              title: const Text('Đặt Xe'),
               actions: [
                 IconButton(onPressed: () {}, icon: const Icon(Icons.chat))
               ],
@@ -78,12 +79,12 @@ class _OrderViewState extends State<OrderView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '\$${state.totalAmount}',
+                        formattedAmountCar(state.totalAmount),
                         style: AppText.title2,
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '14% off',
+                        '0% off',
                         style: AppText.title2.copyWith(
                           color: AppColors.colorSuccess,
                         ),
@@ -104,9 +105,9 @@ class _OrderViewState extends State<OrderView> {
                       side: const BorderSide(
                           width: 1, color: AppColors.lightGray),
                     ),
-                    child: const Text(
-                      'Continues',
-                      style: AppText.subtitle2,
+                    child:  Text(
+                      'Tiếp tục',
+                      style: AppText.subtitle2.copyWith(color: AppColors.white),
                     ),
                   ),
                 ],
@@ -136,9 +137,10 @@ class _OrderViewState extends State<OrderView> {
                                   DeliveryAddress? deliveryAddress =
                                       state.deliveryAddress;
                                   if (deliveryAddress == null) {
-                                    return const Text(
-                                      'No delivery address yet',
-                                      style: AppText.subtitle2,
+                                    return Text(
+                                      'Chưa có địa chỉ giao(nhận) xe',
+                                      style: AppText.subtitle1
+                                          .copyWith(color: AppColors.grey),
                                     );
                                   } else {
                                     return Row(
@@ -240,11 +242,10 @@ class _OrderViewState extends State<OrderView> {
                                     side: const BorderSide(
                                         width: 1, color: Colors.black)),
                                 child: Text(
-                                  'CHANGE ADDRESS',
+                                  'Thay đổi địa chỉ',
                                   style: AppText.body2.copyWith(
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.w500
-                                  ),
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ),
@@ -288,15 +289,94 @@ class _OrderViewState extends State<OrderView> {
                                   style: AppText.subtitle3,
                                 ),
                                 const SizedBox(height: 8),
-                                Text(
-                                  car.brand,
-                                  style: AppText.bodyGrey,
+                                Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(999),
+                                      child: CachedNetworkImage(
+                                        imageUrl: car.brandLogo,
+                                        width: 24,
+                                        height: 24,
+                                        fit: BoxFit.contain,
+                                        errorWidget: (context, url, error) =>
+                                            Image.asset(
+                                          'assets/images/logo-dark.png',
+                                          width: 24,
+                                          height: 24,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      car.brandName,
+                                      style: AppText.bodyGrey,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
                                 ),
                                 const SizedBox(height: 8),
-                                Text(
-                                  '\$${car.price}/day',
-                                  style: AppText.subtitle3,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '${formattedAmountCar(car.price)}/ngày',
+                                      style: AppText.subtitle3,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            context.read<OrderBloc>().add(
+                                                DecrementQuantityOrderEvent());
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.lightGray,
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                            ),
+                                            child: const Icon(
+                                              Icons.remove,
+                                              size: 16,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(8, 0, 8, 0),
+                                          child: Text(
+                                            '${state.quantity}',
+                                            style: AppText.subtitle2,
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            context.read<OrderBloc>().add(
+                                                IncrementQuantityOrderEvent());
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.lightGray,
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                            ),
+                                            child: const Icon(
+                                              Icons.add,
+                                              size: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
+                                const SizedBox(height: 8),
                               ],
                             ),
                           ),
@@ -310,7 +390,7 @@ class _OrderViewState extends State<OrderView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Rental Period',
+                            'Thời Gian Thuê',
                             style: AppText.subtitle3,
                           ),
                           const SizedBox(height: 8.0),
@@ -318,7 +398,7 @@ class _OrderViewState extends State<OrderView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                'Start time',
+                                'Bắt đầu',
                                 style: AppText.body2,
                               ),
                               TextButton.icon(
@@ -329,13 +409,19 @@ class _OrderViewState extends State<OrderView> {
                                 },
                                 label: Text(
                                   state.startTime == null
-                                      ? 'Choose Time'
+                                      ? 'Chọn thời gian'
                                       : DateFormat('dd-MM-yyyy HH:mm')
                                           .format(state.startTime!),
-                                  style: AppText.subtitle3,
+                                  style: AppText.subtitle3.copyWith(
+                                    color: state.startTime == null
+                                        ? AppColors.grey
+                                        : AppColors.fontColor,
+                                  ),
                                 ),
                                 style: TextButton.styleFrom(
-                                  foregroundColor: Colors.black,
+                                  foregroundColor: state.startTime == null
+                                      ? AppColors.grey
+                                      : AppColors.fontColor,
                                 ),
                                 icon: const Icon(Icons.access_time_sharp),
                               ),
@@ -345,7 +431,7 @@ class _OrderViewState extends State<OrderView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                'End time',
+                                'Kết thúc',
                                 style: AppText.body2,
                               ),
                               TextButton.icon(
@@ -356,13 +442,19 @@ class _OrderViewState extends State<OrderView> {
                                 },
                                 label: Text(
                                   state.endTime == null
-                                      ? 'Choose Time'
+                                      ? 'Chọn thời gian'
                                       : DateFormat('dd-MM-yyyy HH:mm')
                                           .format(state.endTime!),
-                                  style: AppText.subtitle3,
+                                  style: AppText.subtitle3.copyWith(
+                                    color: state.endTime == null
+                                        ? AppColors.grey
+                                        : AppColors.fontColor,
+                                  ),
                                 ),
                                 style: TextButton.styleFrom(
-                                  foregroundColor: Colors.black,
+                                  foregroundColor: state.endTime == null
+                                      ? AppColors.grey
+                                      : AppColors.fontColor,
                                 ),
                                 icon: const Icon(Icons.access_time_sharp),
                               ),
@@ -382,7 +474,7 @@ class _OrderViewState extends State<OrderView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Price Details',
+                            'Chi tiết giá',
                             style: AppText.subtitle3,
                           ),
                           const SizedBox(height: 24.0),
@@ -390,11 +482,11 @@ class _OrderViewState extends State<OrderView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                'Price',
+                                'Tổng tiền xe',
                                 style: AppText.body2,
                               ),
                               Text(
-                                '\$${state.price}',
+                                formattedAmountCar(state.price),
                                 style: AppText.subtitle3,
                               ),
                             ],
@@ -404,11 +496,11 @@ class _OrderViewState extends State<OrderView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                'Delivery Charges',
+                                'Phí giao xe',
                                 style: AppText.body2,
                               ),
                               Text(
-                                '\$${state.delivery}',
+                               formattedAmountCar(state.delivery),
                                 style: AppText.subtitle3,
                               ),
                             ],
@@ -418,7 +510,7 @@ class _OrderViewState extends State<OrderView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Discount',
+                                'Voucher giảm giá',
                                 style: AppText.body2,
                               ),
                               Text(
@@ -436,11 +528,15 @@ class _OrderViewState extends State<OrderView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                'Total Amount',
+                                'Tổng thanh toán',
                                 style: AppText.subtitle3,
                               ),
                               Text(
-                                '\$${state.totalAmount != 0 ? state.totalAmount : car.price}',
+                                formattedAmountCar(
+                                  state.totalAmount != 0
+                                      ? state.totalAmount
+                                      : 0,
+                                ),
                                 style: AppText.subtitle3,
                               ),
                             ],
@@ -450,7 +546,8 @@ class _OrderViewState extends State<OrderView> {
                     ),
                     const SizedBox(height: 16),
                     Container(
-                      padding: const EdgeInsets.all(32),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 32),
                       color: const Color(0xffe0e3e7),
                       child: Row(
                         children: [
@@ -463,9 +560,10 @@ class _OrderViewState extends State<OrderView> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              'Safe and secure payments. Easy returns. 100% Authentic Products',
+                              'Chinh phục mọi địa điểm, mỗi bước chân là một hành trình mới. Khám phá thế giới với ứng dụng thuê xe - Đưa bạn đến mọi nơi, mọi lúc!',
                               style: AppText.subtitle3
                                   .copyWith(color: AppColors.primary),
+                              textAlign: TextAlign.justify,
                             ),
                           ),
                         ],

@@ -27,7 +27,7 @@ class OrderManagementBloc
       final orderManagements = await reponsitory.fetchOrders(uId);
 
       final orderManagementsByStatus = orderManagements.where((e) {
-        return e.order.status != 'Completed' && e.order.status != 'Cancelled';
+        return e.order.status != 'Đã hoàn thành' && e.order.status != 'Đã hủy';
       }).toList();
 
       emit(state.copyWith(
@@ -47,10 +47,10 @@ class OrderManagementBloc
     final orderManagements = state.orderManagements;
 
     final orderManagementsByStatus = orderManagements.where((e) {
-      if (event.status != 'Active') {
+      if (event.status != 'Hoạt động') {
         return e.order.status == event.status;
       } else {
-        return e.order.status != 'Completed' && e.order.status != 'Cancelled';
+        return e.order.status != 'Đã hoàn thành' && e.order.status != 'Đã hủy';
       }
     }).toList();
 

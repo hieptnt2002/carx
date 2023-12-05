@@ -62,6 +62,7 @@ class OrderReponsitoryImpl implements OrderReponsitory {
         throw Exception('Error');
       }
     } catch (e) {
+      print(e.toString());
       throw Exception('Error Sever');
     }
   }
@@ -95,14 +96,16 @@ class OrderReponsitoryImpl implements OrderReponsitory {
     required String status,
     String? paymentStatus,
   }) async {
+    Map<String, dynamic> mapRequest = {};
+    mapRequest['id'] = order.id;
+    mapRequest['status'] = status;
+    if (paymentStatus != null) {
+      mapRequest['payment_status'] = paymentStatus;
+    }
     try {
       final response = await _dio.post(
         UPDATE_STATUS_ORDER,
-        data: FormData.fromMap({
-          'id': order.id,
-          'status': status,
-          'payment_status': paymentStatus ?? order.paymentstatus,
-        }),
+        data: FormData.fromMap(mapRequest),
       );
       if (response.statusCode == 200) {
         DioReponse dioResponse = DioReponse.fromJson(jsonDecode(response.data));
@@ -118,6 +121,34 @@ class OrderReponsitoryImpl implements OrderReponsitory {
       }
     } catch (e) {
       throw Exception('Error Sever ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<List<OrderManagement>> fetchOrdersByDistributor(int id) async {
+    try {
+      final reponse = await _dio.post(
+        FETCH_ORDERS_DISTRIBUTOR,
+        data: FormData.fromMap({'id': id}),
+      );
+      if (reponse.statusCode == 200) {
+        DioReponse dioReponse = DioReponse.fromJson(jsonDecode(reponse.data));
+
+        if (dioReponse.status == 'OK') {
+          List<dynamic> reponseData = dioReponse.data;
+          List<OrderManagement> orders = reponseData
+              .map((data) => OrderManagement.fromJson(data))
+              .toList();
+          return orders;
+        } else {
+          return [];
+        }
+      } else {
+        throw Exception('Error');
+      }
+    } catch (e) {
+      print(e.toString());
+      throw Exception('Error Sever');
     }
   }
 }

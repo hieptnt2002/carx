@@ -20,6 +20,7 @@ import 'package:carx/utilities/app_text.dart';
 
 import 'package:carx/utilities/dialog/cancel_order_dialog.dart';
 import 'package:carx/utilities/dialog/rating_vote_dialog.dart';
+import 'package:carx/utilities/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
@@ -65,7 +66,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Order Details'),
+        title: const Text('Chi Tiết Đơn Thuê Xe'),
       ),
       body: WillPopScope(
         onWillPop: () async {
@@ -86,8 +87,8 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                 Navigator.pop(context, true);
               } else if (state is OrderCancelledFailureState) {
                 Loading().hide();
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Cannot cancel due to error')));
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Không thể hủy do lỗi!')));
               }
             },
             builder: (context, state) {
@@ -105,13 +106,23 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  car.name,
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: car.name,
+                                        style: AppText.subtitle1,
+                                      ),
+                                     
+                                      TextSpan(
+                                        text: ' x${order.quantity ?? 1}',
+                                        style: AppText.subtitle2,
+                                      ),
+                                    ],
+                                  ),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
-                                  style: AppText.subtitle3,
                                 ),
-                                const SizedBox(height: 8),
                                 const SizedBox(height: 6),
                                 Row(
                                   children: [
@@ -192,7 +203,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                           RichText(
                             text: TextSpan(
                               children: [
-                                const TextSpan(text: 'ID Order - '),
+                                const TextSpan(text: 'MÃ ĐƠN HÀNG - '),
                                 TextSpan(text: '#${order.code}'),
                               ],
                               style: AppText.subtitle1,
@@ -221,7 +232,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                       padding: const EdgeInsets.all(12),
                       color: AppColors.lightGray,
                       child: const Text(
-                        'Shipping Details',
+                        'CHI TIẾT GIAO HÀNG',
                         style: AppText.subtitle1,
                       ),
                     ),
@@ -264,7 +275,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                       padding: const EdgeInsets.all(12),
                       color: AppColors.lightGray,
                       child: const Text(
-                        'Rental Period',
+                        'THỜI GIAN THUÊ',
                         style: AppText.subtitle1,
                       ),
                     ),
@@ -275,7 +286,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            'Start time',
+                            'Bắt đầu',
                             style: AppText.body2,
                           ),
                           Text(
@@ -292,7 +303,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            'End time',
+                            'Kết thúc',
                             style: AppText.body2,
                           ),
                           Text(
@@ -307,7 +318,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                       padding: EdgeInsets.all(12),
                       color: Color(0xffe0e3e7),
                       child: const Text(
-                        'Payment Details',
+                        'CHI TIẾT GIÁ',
                         style: AppText.subtitle1,
                       ),
                     ),
@@ -349,11 +360,11 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            'Price',
+                            'Tiền đặt xe',
                             style: AppText.body2,
                           ),
                           Text(
-                            '\$ ${order.amount}',
+                            formattedAmountCar(order.amount!),
                             style: AppText.subtitle3,
                           ),
                         ],
@@ -366,11 +377,11 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            'Delivery Charges',
+                            'Phí giao xe',
                             style: AppText.body2,
                           ),
                           Text(
-                            '\$${order.deliveryCharges ?? 'FREE'}',
+                            formattedAmountCar(order.deliveryCharges ?? 0),
                             style: AppText.subtitle3
                                 .copyWith(color: AppColors.colorSuccess),
                           ),
@@ -384,11 +395,12 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            'Discount',
+                            'Voucher giảm giá',
                             style: AppText.body2,
                           ),
                           Text(
-                            '${order.discountAmount ?? 0}',
+                            formattedAmountCar(
+                                int.parse(order.discountAmount ?? '0')),
                             style: AppText.subtitle3,
                           ),
                         ],
@@ -406,11 +418,11 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            'Total Amount',
+                            'Tổng cộng',
                             style: AppText.subtitle3,
                           ),
                           Text(
-                            '\$${order.totalAmount}',
+                            formattedAmountCar(order.totalAmount!),
                             style: AppText.subtitle3,
                           ),
                         ],
@@ -423,8 +435,8 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Visibility(
-                            visible: order.status != 'Cancelled' &&
-                                order.status != 'Completed',
+                            visible: order.status != 'Đã hủy' &&
+                                order.status != 'Đã hoàn thành',
                             child: Expanded(
                               child: SizedBox(
                                 height: 45,
@@ -433,9 +445,9 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                                     final isCancelled =
                                         await showCancelOrderDialog(
                                       context: context,
-                                      title: 'Cancelled Order',
+                                      title: 'Hủy Đặt xe',
                                       content:
-                                          'Do you want to cancel your car rental booking?',
+                                          'Bạn có muốn hủy đơn đặt thuê xe của bạn?',
                                     );
                                     if (isCancelled) {
                                       context
@@ -448,7 +460,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                                       Colors.transparent),
                                   child: Center(
                                     child: Text(
-                                      'Cancel',
+                                      'Hủy đặt xe',
                                       style: AppText.body2
                                           .copyWith(color: Colors.red),
                                     ),
@@ -458,7 +470,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                             ),
                           ),
                           Visibility(
-                            visible: order.status == 'Completed',
+                            visible: order.status == 'Đã hoàn thành',
                             child: Expanded(
                               child: SizedBox(
                                 height: 45,
@@ -471,7 +483,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                                           .showSnackBar(
                                         const SnackBar(
                                           content: Text(
-                                            'Your review has been submitted',
+                                            'Đánh giá của bạn đã được gửi!',
                                             style: TextStyle(
                                                 color: AppColors.white),
                                           ),
@@ -492,7 +504,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                                       Colors.transparent),
                                   child: Center(
                                     child: Text(
-                                      'Reviews',
+                                      'Đánh giá',
                                       style: AppText.body2.copyWith(
                                           color: AppColors.colorSuccess),
                                     ),
@@ -502,7 +514,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                             ),
                           ),
                           Visibility(
-                            visible: order.status != 'Cancelled',
+                            visible: order.status != 'Đã hủy',
                             child: const SizedBox(
                               height: 22,
                               child: VerticalDivider(
@@ -521,7 +533,7 @@ class _CarRentalBookingDetailState extends State<CarRentalBookingDetail> {
                                     Colors.transparent),
                                 child: Center(
                                   child: Text(
-                                    'Support',
+                                    'Hỗ trợ',
                                     style: AppText.body2
                                         .copyWith(color: Colors.blue),
                                   ),

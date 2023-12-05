@@ -16,12 +16,3 @@ class UpdateIndexIndicatorSlider extends HomeEvent {
   List<Object?> get props => [index];
 }
 
-class BrandSelectionTabHomeEvent extends HomeEvent {
-  final int selectedTab;
-  final String brandName;
-  const BrandSelectionTabHomeEvent(
-      {required this.selectedTab, required this.brandName});
-
-  @override
-  List<Object?> get props => [selectedTab, brandName];
-}

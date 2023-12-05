@@ -8,6 +8,7 @@ import 'package:carx/utilities/app_colors.dart';
 
 import 'package:carx/utilities/app_routes.dart';
 import 'package:carx/utilities/app_text.dart';
+import 'package:carx/utilities/util.dart';
 
 import 'package:flutter/material.dart';
 
@@ -124,7 +125,7 @@ class _OrderSucessState extends State<OrderSucess>
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Order placed',
+                    'Đã đặt hàng',
                     style: AppText.header.copyWith(color: AppColors.white),
                   ),
                   const SizedBox(height: 12),
@@ -133,10 +134,10 @@ class _OrderSucessState extends State<OrderSucess>
                     text: TextSpan(
                       children: [
                         const TextSpan(
-                          text: 'Total amount \$',
+                          text: 'Tổng tiền ',
                         ),
                         TextSpan(
-                          text: '${order.totalAmount}',
+                          text: formattedAmountCar(order.totalAmount!),
                         )
                       ],
                       style: AppText.subtitle3.copyWith(color: AppColors.white),
@@ -165,14 +166,36 @@ class _OrderSucessState extends State<OrderSucess>
                                     .copyWith(color: AppColors.white),
                               ),
                               const SizedBox(height: 8),
-                              Text(
-                                car.brand,
-                                style: AppText.body2
-                                    .copyWith(color: AppColors.white),
+                              Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(999),
+                                    child: CachedNetworkImage(
+                                      imageUrl: car.brandLogo,
+                                      width: 24,
+                                      height: 24,
+                                      fit: BoxFit.contain,
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                        'assets/images/logo-dark.png',
+                                        width: 24,
+                                        height: 24,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    car.brandName,
+                                    style: AppText.body2
+                                        .copyWith(color: AppColors.white),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                '\$ ${car.price}',
+                                '${formattedAmountCar(car.price)}/ngày',
                                 style: AppText.subtitle3
                                     .copyWith(color: AppColors.white),
                               ),
@@ -184,7 +207,7 @@ class _OrderSucessState extends State<OrderSucess>
                           decoration: const BoxDecoration(
                             color: Colors.white,
                           ),
-                          padding: EdgeInsets.all(4),
+                          padding: const EdgeInsets.all(4),
                           child: CachedNetworkImage(
                             imageUrl: car.image,
                             height: 72,
@@ -212,8 +235,9 @@ class _OrderSucessState extends State<OrderSucess>
                 children: [
                   Expanded(
                     child: Text(
-                      'SHIPPING DETAILS',
-                      style: AppText.subtitle1.copyWith(color: AppColors.primary),
+                      'CHI TIẾT GIAO XE',
+                      style:
+                          AppText.subtitle1.copyWith(color: AppColors.primary),
                     ),
                   ),
                 ],
@@ -270,8 +294,8 @@ class _OrderSucessState extends State<OrderSucess>
                 ),
                 const SizedBox(width: 6),
                 const Text(
-                  'Estimated delivery - Will be updated soon!',
-                   style: AppText.bodyFontColor,
+                  'Dự kiến giao xe - Sẽ được cập nhật sớm!',
+                  style: AppText.bodyFontColor,
                 ),
               ],
             ),
@@ -288,8 +312,8 @@ class _OrderSucessState extends State<OrderSucess>
                     },
                     icon: SvgPicture.asset('assets/svg/home.svg', width: 24),
                     label: const Text(
-                      'Back to Home',
-                       style: AppText.subtitle3,
+                      'Quay về trang chủ',
+                      style: AppText.subtitle3,
                     ),
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xffe3e5e5),

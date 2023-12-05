@@ -1,3 +1,4 @@
+import 'package:carx/data/model/distributor.dart';
 import 'package:carx/data/model/user.dart';
 import 'package:equatable/equatable.dart';
 
@@ -6,19 +7,27 @@ enum FetchUserStatus { initial, loading, success, failure }
 class PersonalState extends Equatable {
   final User? user;
   final FetchUserStatus fetchUserStatus;
-  const PersonalState({required this.user, required this.fetchUserStatus});
+  final Distributor? distributor;
+  const PersonalState({
+    required this.user,
+    this.distributor,
+    required this.fetchUserStatus,
+  });
   const PersonalState.initial()
       : user = null,
+        distributor = null,
         fetchUserStatus = FetchUserStatus.initial;
 
   PersonalState copyWith({
     User? user,
+    Distributor? distributor,
     FetchUserStatus? fetchUserStatus,
   }) =>
       PersonalState(
         user: user ?? this.user,
+        distributor: distributor ?? this.distributor,
         fetchUserStatus: fetchUserStatus ?? this.fetchUserStatus,
       );
   @override
-  List<Object?> get props => [user, fetchUserStatus];
+  List<Object?> get props => [user, distributor, fetchUserStatus];
 }
