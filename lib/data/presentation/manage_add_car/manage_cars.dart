@@ -20,7 +20,7 @@ class ManageCars extends StatefulWidget {
 class _ManageCarsState extends State<ManageCars> with TickerProviderStateMixin {
   late TabController _tabController;
   List<Car> cars = [];
-  int id = 0;
+  
   final tabs = ['Tất cả', 'Đang bảo dưỡng', 'Chờ duyệt', 'Vi phạm', 'Đã ẩn'];
 
   late final Distributor distributor;
@@ -80,7 +80,7 @@ class _ManageCarsState extends State<ManageCars> with TickerProviderStateMixin {
         ),
       ),
       body: FutureBuilder(
-        future: CarReponsitoryImpl.response().fetchCarsByDistributor(id),
+        future: CarReponsitoryImpl.response().fetchCarsByDistributor(distributor.id),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             cars = snapshot.data ?? [];
