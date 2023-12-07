@@ -5,6 +5,6 @@
 
 <h3 align="left">Languages and Tools:</h3>
 <p align="left">
-  <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40"/> 
-   <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40"/>
+  <img src="https://flexicarrent.000webhostapp.com/ui/detail1.jpg" alt="tailwind" width="40" height="40"/> 
+   <img src="https://flexicarrent.000webhostapp.com/ui/detail1.jpg" alt="tailwind" width="40" height="40"/>
 </p>
