@@ -1,4 +1,9 @@
 import 'package:carx/components/item_post.dart';
+import 'package:carx/components/shimmer_post.dart';
+import 'package:carx/features/model/post.dart';
+import 'package:carx/features/presentation/post/post_article_screen.dart';
+import 'package:carx/features/reponsitories/posts/posts_repository_impl.dart';
+import 'package:carx/utilities/app_colors.dart';
 
 import 'package:flutter/material.dart';
 
@@ -9,13 +14,56 @@ class ExploreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Explore'),
+        title: const Text('Bài đăng'),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return const PostItem();
+      body: FutureBuilder(
+        future: PostsReponsitoryImpl.response().fetchPosts(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Post> posts = snapshot.data!;
+            return ListView.separated(
+              itemBuilder: (context, index) {
+                return PostItem(
+                  post: posts[index],
+                );
+              },
+              itemCount: posts.length,
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(
+                height: 24,
+                thickness: 12,
+                color: AppColors.lightGray,
+              ),
+            );
+          } else {
+            return ListView.separated(
+              itemBuilder: (context, index) {
+                return shimmerPost();
+              },
+              itemCount: 9,
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(
+                height: 24,
+                thickness: 12,
+                color: AppColors.lightGray,
+              ),
+            );
+          }
         },
-        itemCount: 10,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PostArticleScreen(),
+              ));
+        },
+        backgroundColor: AppColors.primary,
+        child: const Icon(
+          Icons.edit,
+          size: 28,
+        ),
       ),
     );
   }

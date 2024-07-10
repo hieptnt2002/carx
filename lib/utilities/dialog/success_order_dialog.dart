@@ -1,5 +1,4 @@
-
-import 'package:carx/data/presentation/order_success/order_success_view.dart';
+import 'package:carx/features/presentation/order_success/order_success_view.dart';
 import 'package:flutter/material.dart';
 
 Future<void> showBookingSuccessDialog({
@@ -10,22 +9,22 @@ Future<void> showBookingSuccessDialog({
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text('Booking success'),
-        content: Text('content'),
+        title: const Text('Booking success'),
+        content: const Text('content'),
         actions: [
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Back'),
+            child: const Text('Back'),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => OrderSucess(),
+                builder: (context) => const OrderSucess(),
               ));
             },
-            child: Text('Views'),
+            child: const Text('Views'),
           )
         ],
       );

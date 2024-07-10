@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carx/data/model/brand.dart';
-import 'package:carx/data/model/car.dart';
-import 'package:carx/data/model/order.dart';
-import 'package:carx/data/model/order_management.dart';
+import 'package:carx/features/model/brand.dart';
+import 'package:carx/features/model/car.dart';
+import 'package:carx/features/model/order.dart';
+import 'package:carx/features/model/order_management.dart';
+
 import 'package:carx/utilities/app_text.dart';
+import 'package:carx/utilities/util.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
@@ -55,7 +57,7 @@ class _CarItemBookingState extends State<CarItemBooking> {
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                   color: Color(0xffe0e3e7),
                 ),
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 child: CachedNetworkImage(
                   imageUrl: car.image,
                   width: 54,
@@ -98,11 +100,50 @@ class _CarItemBookingState extends State<CarItemBooking> {
             ],
           ),
           const SizedBox(height: 16),
-          itemDetail(context, 'ID Order', '#${order.code}'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'ID Order',
+                style: AppText.body2,
+              ),
+              Text(
+                '#${order.code}',
+                style: AppText.body2.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
           const SizedBox(height: 16),
-          itemDetail(context, 'Total Amount', '\$${order.totalAmount}'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Tổng tiền',
+                style: AppText.body2,
+              ),
+              Text(
+                formattedAmountCar(order.totalAmount!),
+                style: AppText.body2.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
           const SizedBox(height: 16),
-          itemDetail(context, 'Status', '${order.status}'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Trạng thái',
+                style: AppText.body2,
+              ),
+              Text(
+                '${order.status}',
+                style: AppText.body2.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: getColorStatus(order.status ?? ''),
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4),
@@ -113,7 +154,7 @@ class _CarItemBookingState extends State<CarItemBooking> {
                   color: Colors.redAccent,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 6),
+                  padding: const EdgeInsets.only(left: 6),
                   child: CountdownTimer(
                     controller: countdownController,
                     endTime: endTime,
@@ -122,7 +163,7 @@ class _CarItemBookingState extends State<CarItemBooking> {
                           order.status == 'Cancelled' ||
                           order.status == 'Completed') {
                         return const Text(
-                          'Finished',
+                          'Đã kết thúc',
                           style: TextStyle(color: Colors.redAccent),
                         );
                       } else {
@@ -143,18 +184,20 @@ class _CarItemBookingState extends State<CarItemBooking> {
     );
   }
 
-  Widget itemDetail(BuildContext context, String title, String value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,  style: AppText.body2,
-        ),
-        Text(
-          value,
-           style: AppText.body2.copyWith(fontWeight: FontWeight.bold),
-        ),
-      ],
-    );
+  Color getColorStatus(String status) {
+    switch (status) {
+      case 'Chờ xác nhận':
+        return Colors.lightBlue;
+      case 'Đang giao':
+        return Colors.orange;
+      case 'Đang thuê':
+        return Colors.blue;
+      case 'Đã hoàn thành':
+        return Colors.green;
+      case 'Đã hủy':
+        return Colors.red;
+      default:
+        return Colors.black;
+    }
   }
 }

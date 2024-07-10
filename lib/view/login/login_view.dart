@@ -29,7 +29,6 @@ class LoginState extends State<LoginView> {
   late bool _hiddenPassword;
   final FocusNode _nameFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
-  
 
   @override
   void initState() {
@@ -57,7 +56,7 @@ class LoginState extends State<LoginView> {
           if (state.isLoading) {
             LoadingScreen().show(
                 context: context,
-                text: state.loadingText ?? 'Please wait a moment');
+                text: state.loadingText ?? 'Xin vui lòng chờ trong giây lát!');
           } else if (!state.isLoading) {
             LoadingScreen().hide();
           }
@@ -68,27 +67,26 @@ class LoginState extends State<LoginView> {
             Navigator.pushNamed(context, Routes.routeRegister);
           } else if (state is AuthStateLoggedOut) {
             if (state.exception is InvalidEmailAuthException) {
-              await showErrorDialog(context: context, text: 'Invalid email');
+              await showErrorDialog(
+                  context: context, text: 'Email không hợp lệ*');
             } else if (state.exception
                 is InvalidLoginCredentialsAuthException) {
               await showErrorDialog(
-                  context: context, text: 'Invalid login credential');
+                  context: context, text: 'Thông tin đăng nhập không hợp lệ*');
             } else if (state.exception is MissingPasswordAuthException) {
-              await showErrorDialog(
-                  context: context, text: 'Missing Passwrord');
+              await showErrorDialog(context: context, text: 'Thiếu mật khẩu*');
             } else if (state.exception is GenericAuthException) {
-              await showErrorDialog(
-                  context: context, text: 'Authentication error');
+              await showErrorDialog(context: context, text: 'Lỗi xác thực*');
             } else if (state.exception
                 is UserCancelLoginWithGoogleAuthException) {
               await showErrorDialog(
-                  context: context, text: 'User cancels login');
+                  context: context, text: 'Người dùng hủy đăng nhập*');
             }
           }
         },
         builder: (context, state) => Scaffold(
           appBar: AppBar(
-            title: const Text('Sign In'),
+            title: const Text('Đăng Nhập'),
           ),
           backgroundColor: const Color.fromARGB(255, 243, 243, 243),
           body: SingleChildScrollView(
@@ -103,7 +101,7 @@ class LoginState extends State<LoginView> {
                     height: 120,
                   ),
                   Text(
-                    'SIGN IN \nTO CONTINUE',
+                    'ĐĂNG NHẬP',
                     maxLines: 2,
                     textAlign: TextAlign.center,
                     style: AppText.header.copyWith(color: AppColors.primary),
@@ -115,7 +113,7 @@ class LoginState extends State<LoginView> {
                     autocorrect: false,
                     cursorColor: Colors.black,
                     decoration: const InputDecoration(
-                      hintText: 'Email',
+                      hintText: 'Email của bạn',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(12),
@@ -141,9 +139,9 @@ class LoginState extends State<LoginView> {
                     cursorColor: Colors.black,
                     obscureText: _hiddenPassword,
                     decoration: InputDecoration(
-                        hintText: 'Password',
+                        hintText: 'Mật khẩu',
                         prefixIcon: const Icon(Icons.lock_person_outlined),
-                        semanticCounterText: 'Password',
+                        semanticCounterText: 'Mật khẩu',
                         suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
@@ -182,7 +180,7 @@ class LoginState extends State<LoginView> {
                         shadowColor: Colors.transparent,
                       ),
                       child: const Text(
-                        'Forgot password',
+                        'Quên mật khẩu',
                         style: TextStyle(color: AppColors.fontColor),
                       ),
                     ),
@@ -198,8 +196,8 @@ class LoginState extends State<LoginView> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(999))),
                       onPressed: () {
-                         _nameFocusNode.unfocus();
-                         _passwordFocusNode.unfocus();
+                        _nameFocusNode.unfocus();
+                        _passwordFocusNode.unfocus();
                         context.read<AuthBloc>().add(
                               AuthEventLogIn(
                                   email: _emailController.text,
@@ -207,7 +205,7 @@ class LoginState extends State<LoginView> {
                             );
                       },
                       child: const Text(
-                        'Log In',
+                        'Đăng nhập',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -218,7 +216,7 @@ class LoginState extends State<LoginView> {
                   ),
                   const SizedBox(height: 48),
                   const Text(
-                    'Or continues with',
+                    'Hoặc tiếp tục với',
                     style: TextStyle(color: Colors.black, fontSize: 16),
                   ),
                   const SizedBox(height: 16),
@@ -302,28 +300,28 @@ class LoginState extends State<LoginView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Don\'t have account',
+                        'Bạn chưa có tài khoản?',
                         style:
                             TextStyle(fontSize: 16, color: AppColors.fontColor),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 2),
                         child: TextButton(
-                            onPressed: () {
-                              context
-                                  .read<AuthBloc>()
-                                  .add(const AuthEventShouldRegister());
-                            },
-                            style: TextButton.styleFrom(
-                                shadowColor: Colors.transparent,
-                                foregroundColor: Colors.transparent),
-                            child: const Text(
-                              'Register',
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: AppColors.secondary,
-                                  fontSize: 18),
-                            )),
+                          onPressed: () {
+                            context
+                                .read<AuthBloc>()
+                                .add(const AuthEventShouldRegister());
+                          },
+                          style: TextButton.styleFrom(
+                              shadowColor: Colors.transparent,
+                              foregroundColor: Colors.transparent),
+                          child: Text(
+                            'Đăng ký',
+                            style: AppText.subtitle1.copyWith(
+                                color: AppColors.primary,
+                                decoration: TextDecoration.underline),
+                          ),
+                        ),
                       )
                     ],
                   ),

@@ -24,7 +24,7 @@ class RatingBarWidget extends StatelessWidget {
           width: 10,
           child: Text(
             rating.toString(),
-           style: AppText.subtitle3,
+            style: AppText.subtitle3,
           ),
         ),
         const Padding(

@@ -3,7 +3,7 @@ import 'package:carx/utilities/app_colors.dart';
 import 'package:carx/utilities/app_routes.dart';
 import 'package:carx/utilities/app_text.dart';
 import 'package:carx/utilities/navigation_controller.dart';
-import 'package:carx/data/model/brand.dart';
+import 'package:carx/features/model/brand.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +20,7 @@ class ItemCategory extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            if (brand.name == 'All') {
+            if (brand.name == 'Tất cả') {
               controller.updateItem(1);
             } else {
               Navigator.pushNamed(context, Routes.routeCarByBrand,

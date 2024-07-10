@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 
 class FirebaseMessagingService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
@@ -10,12 +11,12 @@ class FirebaseMessagingService {
 
   void configureFirebaseMessaging() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Received message: ${message.notification?.body}');
+      debugPrint('Received message: ${message.notification?.body}');
       // Xử lý thông báo được nhận khi ứng dụng đang chạy
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('Message clicked!');
+      debugPrint('Message clicked!');
       // Xử lý thông báo khi người dùng nhấp vào thông báo khi ứng dụng đang chạy
     });
   }

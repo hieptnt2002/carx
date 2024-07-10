@@ -68,6 +68,12 @@ dependencies:
   sqflite: ^2.3.0
   path: ^1.8.3
   path_provider: ^2.1.1
+  google_maps_flutter: ^2.5.0
+  location: ^5.0.3
+  shared_preferences: ^2.2.2
+  auto_animated: ^3.2.0
+  flutter_polyline_points: ^2.0.0
+  
 
 flutter_native_splash:
   color: "#ffffff"

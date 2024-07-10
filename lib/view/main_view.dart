@@ -2,11 +2,11 @@
 
 import 'package:carx/utilities/app_colors.dart';
 import 'package:carx/utilities/navigation_controller.dart';
-import 'package:carx/data/presentation/categories/ui/categories_view.dart';
-import 'package:carx/data/presentation/home/ui/home_screen.dart';
+import 'package:carx/features/presentation/categories/ui/categories_view.dart';
+import 'package:carx/features/presentation/home/ui/home_view.dart';
 
-import 'package:carx/data/presentation/personal/personal_view.dart';
-import 'package:carx/data/presentation/notify/notification_screen.dart';
+import 'package:carx/features/presentation/personal/personal_view.dart';
+import 'package:carx/features/presentation/notify/notification_screen.dart';
 import 'package:carx/view/explore_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -37,31 +37,31 @@ class _MainViewState extends State<MainView> {
           items: <BottomNavigationBarItem>[
             bottomNavigationItem(
               'assets/svg/home.svg',
-              'Home',
+              'Trang chủ',
               controller.currentItem.value,
               0,
             ),
             bottomNavigationItem(
               'assets/svg/categories.svg',
-              'Categories',
+              'Danh mục',
               controller.currentItem.value,
               1,
             ),
             bottomNavigationItem(
               'assets/svg/explore.svg',
-              'Explore',
+              'Bài đăng',
               controller.currentItem.value,
               2,
             ),
             bottomNavigationItem(
               'assets/svg/bell.svg',
-              'Notification',
+              'Thông báo',
               controller.currentItem.value,
               3,
             ),
             bottomNavigationItem(
               'assets/svg/person.svg',
-              'Personal',
+              'Cá nhân',
               controller.currentItem.value,
               4,
             ),
