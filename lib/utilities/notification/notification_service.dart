@@ -8,7 +8,6 @@ class NotificationService {
     await _dio.post(
       FCM_END_POINT,
       options: Options(
-        
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization': 'key=$FIREBASE_SEVER_KEY',

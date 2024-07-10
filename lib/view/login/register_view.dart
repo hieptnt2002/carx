@@ -93,7 +93,7 @@ class RegisterState extends State<RegisterView> {
               await showErrorDialog(
                   context: context, text: 'Mật khẩu không chính xác');
             } else if (state.exception is GenericAuthException) {
-              await showErrorDialog(context: context, text: 'Lỗi ');
+              await showErrorDialog(context: context, text: 'Lỗi xác thực*');
             }
           }
         },
@@ -114,13 +114,12 @@ class RegisterState extends State<RegisterView> {
                 padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 12),
                 child: Column(
                   children: [
-                      Image.asset(
-                    'assets/images/logo-dark.png',
-                    fit: BoxFit.contain,
-                    width: MediaQuery.of(context).size.width / 2,
-                    height: 120,
-                  ),
-                 
+                    Image.asset(
+                      'assets/images/logo-dark.png',
+                      fit: BoxFit.contain,
+                      width: MediaQuery.of(context).size.width / 2,
+                      height: 120,
+                    ),
                     const Text(
                       'TẠO TÀI KHOẢN',
                       maxLines: 2,
@@ -193,7 +192,7 @@ class RegisterState extends State<RegisterView> {
                               BorderSide(width: 1, color: Colors.black54),
                         ),
                         prefixIconColor: Colors.grey,
-                        prefixIcon: const Icon(Icons.email_rounded),
+                        prefixIcon: Icon(Icons.email_rounded),
                       ),
                     ),
                     const SizedBox(height: 16),

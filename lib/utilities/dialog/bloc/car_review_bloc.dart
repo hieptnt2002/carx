@@ -1,4 +1,4 @@
-import 'package:carx/data/reponsitories/car/car_reponsitory.dart';
+import 'package:carx/features/reponsitories/car/car_reponsitory.dart';
 import 'package:carx/service/auth/auth_service.dart';
 import 'package:carx/utilities/dialog/bloc/car_review_event.dart';
 import 'package:carx/utilities/dialog/bloc/car_review_state.dart';

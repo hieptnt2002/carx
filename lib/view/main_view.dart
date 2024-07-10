@@ -2,11 +2,11 @@
 
 import 'package:carx/utilities/app_colors.dart';
 import 'package:carx/utilities/navigation_controller.dart';
-import 'package:carx/data/presentation/categories/ui/categories_view.dart';
-import 'package:carx/data/presentation/home/ui/home_view.dart';
+import 'package:carx/features/presentation/categories/ui/categories_view.dart';
+import 'package:carx/features/presentation/home/ui/home_view.dart';
 
-import 'package:carx/data/presentation/personal/personal_view.dart';
-import 'package:carx/data/presentation/notify/notification_screen.dart';
+import 'package:carx/features/presentation/personal/personal_view.dart';
+import 'package:carx/features/presentation/notify/notification_screen.dart';
 import 'package:carx/view/explore_screen.dart';
 
 import 'package:flutter/material.dart';

@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           const AuthStateLoggedOut(
             exception: null,
             isLoading: true,
-            loadingText: 'Please wait while I log you in',
+            loadingText: 'Vui lòng đợi trong khi đăng nhập',
           ),
         );
         try {
@@ -45,7 +45,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           const AuthStateLoggedOut(
             exception: null,
             isLoading: true,
-            loadingText: 'Please wait while I log you in',
+            loadingText: 'Vui lòng đợi trong khi đăng nhập',
           ),
         );
 
@@ -78,7 +78,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(const AuthStateRegistering(
             exception: null,
             isLoading: true,
-            loadingText: 'Please wait while create account'));
+            loadingText: 'Vui lòng đợi trong khi tạo tài khoản'));
         final email = event.email;
         final password = event.password;
         final name = event.name;

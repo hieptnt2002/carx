@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carx/data/model/brand.dart';
-import 'package:carx/data/model/car.dart';
-import 'package:carx/data/model/order.dart';
-import 'package:carx/data/model/order_management.dart';
+import 'package:carx/features/model/brand.dart';
+import 'package:carx/features/model/car.dart';
+import 'package:carx/features/model/order.dart';
+import 'package:carx/features/model/order_management.dart';
 import 'package:carx/utilities/app_colors.dart';
 
 import 'package:carx/utilities/app_text.dart';
@@ -58,7 +58,7 @@ class _CarItemManageBookState extends State<CarItemManageBook> {
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                   color: Color(0xffe0e3e7),
                 ),
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 child: CachedNetworkImage(
                   imageUrl: car.image,
                   width: 54,
@@ -156,7 +156,7 @@ class _CarItemManageBookState extends State<CarItemManageBook> {
                   color: Colors.redAccent,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 6),
+                  padding: const EdgeInsets.only(left: 6),
                   child: CountdownTimer(
                     controller: countdownController,
                     endTime: endTime,
@@ -177,25 +177,24 @@ class _CarItemManageBookState extends State<CarItemManageBook> {
                     },
                   ),
                 ),
-                 Align(
+                Align(
                   alignment: Alignment.centerRight,
-                   child: GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(12, 6, 12, 6),
-                          decoration: BoxDecoration(
-                            border:
-                                Border.all(color: AppColors.primary, width: 1),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: const Text(
-                            'Xác nhận cho thuê',
-                            style: AppText.bodyPrimary,
-                          ),
-                        ),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(12, 6, 12, 6),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.primary, width: 1),
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                 ),
+                      child: const Text(
+                        'Xác nhận cho thuê',
+                        style: AppText.bodyPrimary,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

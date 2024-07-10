@@ -11,6 +11,4 @@ class LoadingScreenController {
     required this.close,
     required this.update,
   });
-
 }
-

@@ -1,8 +1,8 @@
 import 'package:carx/components/item_post.dart';
 import 'package:carx/components/shimmer_post.dart';
-import 'package:carx/data/model/post.dart';
-import 'package:carx/data/presentation/post/post_article_screen.dart';
-import 'package:carx/data/reponsitories/posts/posts_repository_impl.dart';
+import 'package:carx/features/model/post.dart';
+import 'package:carx/features/presentation/post/post_article_screen.dart';
+import 'package:carx/features/reponsitories/posts/posts_repository_impl.dart';
 import 'package:carx/utilities/app_colors.dart';
 
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ class ExploreScreen extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PostArticleScreen(),
+                builder: (context) => const PostArticleScreen(),
               ));
         },
         backgroundColor: AppColors.primary,

@@ -1,6 +1,6 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
-import 'package:carx/data/reponsitories/auth/auth_reponsitory_impl.dart';
+import 'package:carx/features/reponsitories/auth/auth_reponsitory_impl.dart';
 
 import 'package:carx/service/auth/auth_exceptions.dart';
 import 'package:carx/service/auth/auth_provider.dart';

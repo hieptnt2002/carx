@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carx/data/model/brand.dart';
-import 'package:carx/data/model/car.dart';
-import 'package:carx/data/model/order.dart';
-import 'package:carx/data/model/order_management.dart';
+import 'package:carx/features/model/brand.dart';
+import 'package:carx/features/model/car.dart';
+import 'package:carx/features/model/order.dart';
+import 'package:carx/features/model/order_management.dart';
 
 import 'package:carx/utilities/app_text.dart';
 import 'package:carx/utilities/util.dart';
@@ -57,7 +57,7 @@ class _CarItemBookingState extends State<CarItemBooking> {
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                   color: Color(0xffe0e3e7),
                 ),
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 child: CachedNetworkImage(
                   imageUrl: car.image,
                   width: 54,
@@ -154,7 +154,7 @@ class _CarItemBookingState extends State<CarItemBooking> {
                   color: Colors.redAccent,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 6),
+                  padding: const EdgeInsets.only(left: 6),
                   child: CountdownTimer(
                     controller: countdownController,
                     endTime: endTime,

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carx/data/model/car.dart';
-import 'package:carx/data/reponsitories/car/car_reponsitory_impl.dart';
+import 'package:carx/features/model/car.dart';
+import 'package:carx/features/reponsitories/car/car_reponsitory_impl.dart';
 import 'package:carx/loading/loading.dart';
 import 'package:carx/utilities/app_colors.dart';
 import 'package:carx/utilities/dialog/bloc/car_review_bloc.dart';
@@ -48,7 +48,7 @@ Future<bool> ratingVoteDialog(
                     duration: Duration(milliseconds: 800),
                   ),
                 );
-              }else{
+              } else {
                 Loading().hide();
               }
             },
@@ -83,7 +83,6 @@ Future<bool> ratingVoteDialog(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                           
                             Text(
                               car.name,
                               maxLines: 2,
@@ -147,13 +146,13 @@ Future<bool> ratingVoteDialog(
                             TextField(
                               focusNode: textFocusNode,
                               onChanged: (value) {
-                                carReviewBloc.add(CommentInputCarReviewEvent(
-                                    value.toString()));
+                                carReviewBloc
+                                    .add(CommentInputCarReviewEvent(value));
                               },
                               autocorrect: false,
                               cursorColor: Colors.black,
                               decoration: const InputDecoration(
-                                hintText: 'Nội dung phản hồi ......',
+                                hintText: 'Nhập nội dung phản hồi',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(8),

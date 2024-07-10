@@ -4,7 +4,7 @@ class AuthState {
   final bool isLoading;
   final String? loadingText;
   const AuthState(
-      {required this.isLoading, this.loadingText = 'Please await a moment'});
+      {required this.isLoading, this.loadingText = 'Đợi trong giây lát ...'});
 }
 
 class AuthStateUnitialized extends AuthState {
@@ -14,11 +14,9 @@ class AuthStateUnitialized extends AuthState {
 
 class AuthStateRegistering extends AuthState {
   final Exception? exception;
-  const AuthStateRegistering({
-    required this.exception,
-    required bool isLoading,
-     String? loadingText
-  }) : super(isLoading: isLoading ,loadingText: loadingText);
+  const AuthStateRegistering(
+      {required this.exception, required bool isLoading, String? loadingText})
+      : super(isLoading: isLoading, loadingText: loadingText);
 }
 
 class AuthStateLoggedIn extends AuthState {
@@ -42,6 +40,6 @@ class AuthStateLoggedOut extends AuthState {
   const AuthStateLoggedOut({
     required this.exception,
     required bool isLoading,
-     String? loadingText,
+    String? loadingText,
   }) : super(isLoading: isLoading, loadingText: loadingText);
 }

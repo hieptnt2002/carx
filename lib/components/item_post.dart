@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carx/data/model/post.dart';
+import 'package:carx/features/model/post.dart';
 import 'package:carx/utilities/app_colors.dart';
 import 'package:carx/utilities/app_text.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class PostItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
-         crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -83,7 +83,7 @@ class PostItem extends StatelessWidget {
             itemCount: post.imagesPost.length,
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

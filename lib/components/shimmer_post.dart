@@ -38,7 +38,7 @@ Widget shimmerPost() {
                       color: AppColors.lightGray,
                     ),
                   ),
-                 const SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   Shimmer.fromColors(
                     baseColor: AppColors.lightGray.withOpacity(0.5),
                     highlightColor: AppColors.lightGray,

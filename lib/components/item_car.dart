@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carx/data/model/car.dart';
+import 'package:carx/features/model/car.dart';
 import 'package:carx/utilities/app_colors.dart';
 
 import 'package:carx/utilities/app_routes.dart';

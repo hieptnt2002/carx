@@ -1,4 +1,4 @@
-import 'package:carx/data/model/car_review.dart';
+import 'package:carx/features/model/car_review.dart';
 import 'package:carx/utilities/app_colors.dart';
 import 'package:carx/utilities/app_text.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class ReviewsCardWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 6, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 6, 0, 0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,9 +73,8 @@ class ReviewsCardWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0, 6, 0, 0),
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.sizeOf(context).width,
-              decoration: BoxDecoration(),
               child: Text(
                 carReview.comment,
                 style: AppText.body2,
